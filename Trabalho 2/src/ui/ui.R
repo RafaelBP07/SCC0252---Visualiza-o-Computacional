@@ -7,7 +7,7 @@ pacman::p_load(shiny,
 #------------------------------------------------------------
 
 # Carregar dados
-# df <- read.csv('x/x.csv')
+df <- read.csv('https://raw.githubusercontent.com/RafaelBP07/SCC0252-Visualizacao-Computacional/main/Trabalho%201/pre_processed_data.csv')
 
 #------------------------------------------------------------
 
