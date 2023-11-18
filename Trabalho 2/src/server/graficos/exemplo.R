@@ -2,35 +2,38 @@
 
 #-----------------------------------------------------------------------------------------------
 
-# Funçao que gera o grafico de series
-grafico_1 <- function(variavel, titulo_grafico, eixo_x, eixo_y) {
-  p <- as.data.frame(cbind(serie=series)) %>%
-    slice(-1) %>%
-    ggplot(aes(x = , y = variavel)) +
-    geom_line(color = "#2596be") +
+# Função que gera o gráfico de barras
+grafico_1 <- function(data, x_var, y_var, titulo_grafico, eixo_x, eixo_y) {
+  p <- ggplot(data, aes(x = !!x_var, y = !!y_var)) +
+    geom_bar(stat = "identity", fill = "#2596be") +
     labs(title = titulo_grafico, x = eixo_x, y = eixo_y) +
-    theme_minimal() +
+    theme_minimal()
   
   fig <- ggplotly(p)
-  
   return(fig)
 }
 
+# Exemplo de uso da função
+# grafico_1(data = df, x_var = Released_Year, y_var = Gross, 
+          # titulo_grafico = "Título do Gráfico", eixo_x = "Eixo X", eixo_y = "Eixo Y")
+
 #-----------------------------------------------------------------------------------------------
 
-# Funçao que renderiza o grafico de series para a variavel especificada
+# Função que renderiza o gráfico de barras para as variáveis especificadas
 render_grafico_1 <- function(input) {
-  variavel <- input$variavel
+  variavel_x <- as.name(input$variavel_x)
+  variavel_y <- as.name(input$variavel_y)
   
-  # Verifica se a variável 'variavel' é uma coluna válida nos dados
-  if (!(variavel %in% names(df))) {
-    stop("A variável 'variavel' não é uma coluna válida nos dados.")
+  # Verifica se as variáveis são colunas válidas nos dados
+  if (!(as.character(variavel_x) %in% names(df) && as.character(variavel_y) %in% names(df))) {
+    stop("Pelo menos uma das variáveis não é uma coluna válida nos dados.")
   }
   
-  titulo <- titulo_1(variavel)
+  # titulo <- titulo_1(paste(variavel_x, variavel_y, sep = " vs "))
   
-  
-  p <- grafico_1(df[[variavel]], titulo, "X", "Y")
+  # Utiliza a função grafico_1 para gerar o gráfico
+  p <- grafico_1(data = df_sum, x_var = variavel_x, y_var = variavel_y, 
+                 titulo_grafico = "titulo", eixo_x = "X", eixo_y = "Y")
   
   return(p)
 }
