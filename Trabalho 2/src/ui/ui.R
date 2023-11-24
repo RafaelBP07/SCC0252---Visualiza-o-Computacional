@@ -75,13 +75,23 @@ ui <- dashboardPage(
               
               fluidRow(
                 column(width = 12,
-                       box(title = span(icon("chart-line"), " Gráfico Exemplo"),
-                           width = NULL, status = "info", solidHeader = TRUE,
-                           plotlyOutput("grafico_1", height = 500),
-                           collapsible = TRUE, collapsed = FALSE
+                       box(
+                         title = span(icon("chart-line"), " Gráfico Exemplo"),
+                         width = NULL, status = "info", solidHeader = TRUE,
+                         plotlyOutput("grafico_1", height = 500),
+                         collapsible = TRUE, collapsed = FALSE,
+                         absolutePanel(
+                           dropdown(
+                             uiOutput("texto_sobre"),
+                             style = "unite", icon = icon("circle-info"),
+                             status = "primary", width = "300px",
+                             tooltip = tooltipOptions(title = "Clique para ver mais informações sobre esse gráfico!")),
+                           top = "8%", left = "1%", width = 300, zIndex = 1000 # left = 1% ou 95%
+                         )
                        )
                 )
               ),
+              
               
               
               fluidRow(

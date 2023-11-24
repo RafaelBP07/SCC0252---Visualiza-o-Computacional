@@ -14,14 +14,31 @@ source("./src/server/graficos/index.R")
 server <- function(input, output, session) {
   
   print('recarregando')
-  #================================================================== EVOLUÇÃO
+  #================================================================== GRÁFICOS
   
   output$grafico_1 <- renderPlotly({
     render_grafico_1(input)
   })
   
-  #================================================================== END: Gráficos
+  #================================================================== END: GRÁFICOS
 
+  #================================================================== TEXTOS
+  output$texto_sobre <- renderUI({
+    tagList(
+      tags$h4(tags$b("Contexto e Justificativa")),
+      tags$p("XXX"),
+      tags$h4(tags$b("Interpretação do Gráfico")),
+      tags$p("XXX"),
+      tags$h4(tags$b("Insights e Observações")),
+      tags$p("XXX"),
+      tags$h4(tags$b("Exemplos e Aplicações Práticas")),
+      tags$p("XXX"),
+      tags$h4(tags$b("Limitações e Considerações Adicionais")),
+      tags$p("XXX")
+    )
+  })
+  
+  #================================================================== END: TEXTOS
   
   # CSS para atualizar o layout
   output$style <- renderUI({
