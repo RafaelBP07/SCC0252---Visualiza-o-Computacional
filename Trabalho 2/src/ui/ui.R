@@ -39,18 +39,22 @@ ui <- dashboardPage(
   dashboardHeader(title = span(icon("film"), "Top 1000 Filmes")),
   dashboardSidebar(
     sidebarMenu(
-      menuItem("Página 1", tabName = "pag1", icon = icon("chart-line")),
-      menuItem("Página 2", tabName = "pag2", icon = icon("chart-line")),
-      menuItem("Página 3", tabName = "pag3",icon = icon("chart-line")),
-      menuItem("Página 4", tabName = "pag4",icon = icon("chart-line")),
-      menuItem("Página 5", tabName = "pag5",icon = icon("chart-line"))
+      menuItem("Pairplot", tabName = "pag1", icon = icon("chart-line")),
+      menuItem("Análise Temporal", tabName = "pag2", icon = icon("chart-line")),
+      menuItem("Comparação", tabName = "pag3",icon = icon("chart-line")),
+      menuItem("Sobre", tabName = "pag4",icon = icon("chart-line"))
     )
   ),
   dashboardBody(
     uiOutput("style"),
     chooseSliderSkin("Flat"),
     tabItems(
-      tabItem(tabName = "pag1",
+      tabItem("pag1",
+              h2("Conteúdo da Página 1"),
+              
+      ),
+      
+      tabItem(tabName = "pag2",
               fluidRow(
                 column(width = 4,
                        box(title = span(icon("x"), " Selecione a variável de sua preferência"),
@@ -65,7 +69,8 @@ ui <- dashboardPage(
                   width = 4,
                   box(title = span(icon("calendar"), " Selecione o período de sua preferência"),
                       width = NULL, status = "info", solidHeader = TRUE,
-                      # sliderInput(),
+                      sliderInput("date_slider", "Período", min = min(df$Released_Year), max = max(df$Released_Year),
+                                  value = c(min(df$Released_Year), max(df$Released_Year))),
                       collapsible = TRUE
                   )
                 )
@@ -114,11 +119,6 @@ ui <- dashboardPage(
       
       
       
-      tabItem("pag2",
-              h2("Conteúdo da Página 2"),
-          
-      ),
-      
       tabItem("pag3",
               h2("Conteúdo da Página 3"),
               
@@ -127,12 +127,8 @@ ui <- dashboardPage(
       tabItem("pag4",
               h2("Conteúdo da Página 4"),
 
-      ),
-      
-      tabItem("pag5",
-              h2("Conteúdo da Página 5"),
-
       )
+      
     )
   )
 )
