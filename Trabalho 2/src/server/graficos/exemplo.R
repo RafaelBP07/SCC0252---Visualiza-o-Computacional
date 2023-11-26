@@ -29,10 +29,12 @@ render_grafico_1 <- function(input) {
     stop("Pelo menos uma das variáveis não é uma coluna válida nos dados.")
   }
   
+  data <- carregar_dados("sum")
+  
   # titulo <- titulo_1(paste(variavel_x, variavel_y, sep = " vs "))
   
   # Utiliza a função grafico_1 para gerar o gráfico
-  p <- grafico_1(data = df_sum, x_var = variavel_x, y_var = variavel_y, 
+  p <- grafico_1(data = data, x_var = variavel_x, y_var = variavel_y, 
                  titulo_grafico = "titulo", eixo_x = "X", eixo_y = "Y")
   
   return(p)
