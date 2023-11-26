@@ -23,7 +23,7 @@ server <- function(input, output, session) {
   #================================================================== END: GRÁFICOS
 
   #================================================================== TEXTOS
-  output$texto_sobre <- renderUI({
+  output$texto_info1 <- renderUI({
     tagList(
       tags$h4(tags$b("Contexto e Justificativa")),
       tags$p("XXX"),
@@ -39,6 +39,30 @@ server <- function(input, output, session) {
   })
   
   #================================================================== END: TEXTOS
+  
+  output$texto_sobre <- renderUI({
+    tagList(
+      tags$p(tags$b("Origem dos Dados:")),
+      tags$p("Os dados utilizados são provenientes do",
+             tags$a(href = 'https://www.kaggle.com/datasets/harshitshankhdhar/imdb-dataset-of-top-1000-movies-and-tv-shows', target = "_blank", "kaggle"), "."),
+      
+      tags$p(tags$b("Navegação no Dashboard:")),
+      tags$p("Clique nas abas abaixo para explorar diferentes aspectos dos dados:"),
+      tags$p("1.", tags$a("Pairplot", onclick = "openTab('pairplot')", href = "#"), 
+             "- Nesta seção, você pode visualizar um pairplot das variáveis selecionadas para entender as relações entre elas."),
+      tags$p("2.", tags$a("Análise Temporal", onclick = "openTab('analise_temporal')", href = "#"), 
+             "- Explore a evolução temporal das variáveis relacionadas aos filmes, observando tendências ao longo do tempo."),
+      tags$p("3.", tags$a("Comparação", onclick = "openTab('comparacao')", href = "#"), 
+             "- Compare diferentes variáveis para obter insights sobre como elas se relacionam."),
+
+      tags$p(tags$b("Código no GitHub:")),
+      tags$p("O código-fonte deste projeto está disponível no GitHub. Você pode acessá-lo em:",
+             tags$a(href = 'https://github.com/RafaelBP07/SCC0252-Visualizacao-Computacional/tree/main', target = "_blank", "GitHub Repository")),
+      
+      tags$p("Para mais informações sobre cada aba, consulte a seção correspondente.")
+      
+    )
+  })
   
   # CSS para atualizar o layout
   output$style <- renderUI({

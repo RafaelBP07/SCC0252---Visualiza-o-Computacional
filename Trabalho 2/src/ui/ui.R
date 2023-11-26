@@ -29,8 +29,17 @@ df_mean <- aggregate(. ~ Released_Year, data = df[, numeric_columns], FUN = mean
 #------------------------------------------------------------
 
 # Input filtros
-Vars <- names(df_sum)
-Vars_nomes <- names(df_sum)
+
+# Aba Análise temporal
+Vars_temp <- names(df_sum)
+Vars_temp <- setdiff(Vars_temp, "Released_Year")
+Vars_temp_nomes <- Vars_temp
+
+# Aba Comparação
+Vars_comp <- names(df)
+Vars_comp <- setdiff(Vars_comp, c(Vars_temp, "Released_Year", "Series_Title"))
+Vars_comp_nomes <- Vars_comp
+
 
 #------------------------------------------------------------
 
@@ -40,9 +49,9 @@ ui <- dashboardPage(
   dashboardSidebar(
     sidebarMenu(
       menuItem("Pairplot", tabName = "pag1", icon = icon("chart-line")),
-      menuItem("Análise Temporal", tabName = "pag2", icon = icon("chart-line")),
-      menuItem("Comparação", tabName = "pag3",icon = icon("chart-line")),
-      menuItem("Sobre", tabName = "pag4",icon = icon("chart-line"))
+      menuItem("Análise Temporal", tabName = "pag2", icon = icon("timeline")),
+      menuItem("Comparação", tabName = "pag3",icon = icon("arrow-down-up-across-line")),
+      menuItem("Sobre", tabName = "pag4",icon = icon("circle-info"))
     )
   ),
   dashboardBody(
@@ -50,7 +59,17 @@ ui <- dashboardPage(
     chooseSliderSkin("Flat"),
     tabItems(
       tabItem("pag1",
-              h2("Conteúdo da Página 1"),
+              fluidRow(
+                column(width = 12,
+                       box(title = span(icon("chart-line"), " Pairplot"),
+                           width = NULL, status = "info", solidHeader = TRUE,
+                           fluidRow(column(width = 6,
+                                           # plotlyOutput("pairplot", height = 500)
+                                           )),
+                           collapsible = TRUE, collapsed = FALSE
+                       )
+                )
+              )
               
       ),
       
@@ -59,8 +78,7 @@ ui <- dashboardPage(
                 column(width = 4,
                        box(title = span(icon("x"), " Selecione a variável de sua preferência"),
                            width = NULL, status = "info", solidHeader = TRUE,
-                           selectInput("variavel_x", "Variável Eixo X", setNames(Vars, Vars_nomes), selected = "Released_Year", selectize = TRUE),
-                           selectInput("variavel_y", "Variável Eixo Y", setNames(Vars, Vars_nomes), selected = "Gross", selectize = TRUE),
+                           selectInput("variavel", "Variável Selecionada", setNames(Vars_temp, Vars_temp_nomes), selected = "Gross", selectize = TRUE),
                            collapsible = TRUE
                        )
                 ),
@@ -87,7 +105,7 @@ ui <- dashboardPage(
                          collapsible = TRUE, collapsed = FALSE,
                          absolutePanel(
                            dropdown(
-                             uiOutput("texto_sobre"),
+                             uiOutput("texto_info1"),
                              style = "unite", icon = icon("circle-info"),
                              status = "primary", width = "300px",
                              tooltip = tooltipOptions(title = "Clique para ver mais informações sobre esse gráfico!")),
@@ -103,14 +121,14 @@ ui <- dashboardPage(
                 column(width = 12,
                        box(title = span(icon("chart-line"), " XXXXX"),
                            width = NULL, status = "info", solidHeader = TRUE,
-                           fluidRow(column(width = 6,
-                                           plotlyOutput("grafico_2", height = 500)),
-                                    column(width = 6,
-                                           plotlyOutput("grafico_3", height = 500))),
-                           fluidRow(column(width = 6,
-                                           plotlyOutput("grafico_4", height = 500)),
-                                    column(width = 6,
-                                           plotlyOutput("grafico_5", height = 500))),
+                           # fluidRow(column(width = 6,
+                           #                 plotlyOutput("grafico_2", height = 500)),
+                           #          column(width = 6,
+                           #                 plotlyOutput("grafico_3", height = 500))),
+                           # fluidRow(column(width = 6,
+                           #                 plotlyOutput("grafico_4", height = 500)),
+                           #          column(width = 6,
+                           #                 plotlyOutput("grafico_5", height = 500))),
                            collapsible = TRUE, collapsed = TRUE
                        )
                 )
@@ -120,12 +138,48 @@ ui <- dashboardPage(
       
       
       tabItem("pag3",
-              h2("Conteúdo da Página 3"),
+              fluidRow(
+                column(width = 4,
+                       box(title = span(icon("x"), " Selecione a variável de sua preferência"),
+                           width = NULL, status = "info", solidHeader = TRUE,
+                           selectInput("variavel_x", "Variável Eixo X", setNames(Vars_comp, Vars_comp_nomes), selected = "X", selectize = TRUE),
+                           selectInput("variavel_y", "Variável Eixo Y", setNames(Vars_comp, Vars_comp_nomes), selected = "X", selectize = TRUE),
+                           collapsible = TRUE
+                       )
+                ),
+
+                
+              ),
+              
+              fluidRow(
+                column(width = 12,
+                       box(title = span(icon("chart-line"), " XXXXX"),
+                           width = NULL, status = "info", solidHeader = TRUE,
+                           # fluidRow(column(width = 6,
+                           #                 plotlyOutput("grafico_2", height = 500)),
+                           #          column(width = 6,
+                           #                 plotlyOutput("grafico_3", height = 500))),
+                           # fluidRow(column(width = 6,
+                           #                 plotlyOutput("grafico_4", height = 500)),
+                           #          column(width = 6,
+                           #                 plotlyOutput("grafico_5", height = 500))),
+                           collapsible = TRUE, collapsed = FALSE
+                       )
+                )
+              )
               
       ),
       
       tabItem("pag4",
-              h2("Conteúdo da Página 4"),
+              fluidRow(
+                column(width = 12, 
+                       box(title = span(icon("circle-info"), " Informaçoes sobre o dashboard"), 
+                           width = NULL, status = "info", solidHeader = TRUE,
+                           htmlOutput("texto_sobre"),
+                           collapsible = TRUE
+                       )
+                )
+              )
 
       )
       

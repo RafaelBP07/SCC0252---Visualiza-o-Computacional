@@ -21,8 +21,8 @@ grafico_1 <- function(data, x_var, y_var, titulo_grafico, eixo_x, eixo_y) {
 
 # Função que renderiza o gráfico de barras para as variáveis especificadas
 render_grafico_1 <- function(input) {
-  variavel_x <- as.name(input$variavel_x)
-  variavel_y <- as.name(input$variavel_y)
+  variavel_x <- as.name("Released_Year")
+  variavel_y <- as.name(input$variavel)
   
   # Verifica se as variáveis são colunas válidas nos dados
   if (!(as.character(variavel_x) %in% names(df) && as.character(variavel_y) %in% names(df))) {
