@@ -61,12 +61,40 @@ ui <- dashboardPage(
       tabItem("pag1",
               fluidRow(
                 column(width = 12,
-                       box(title = span(icon("chart-line"), " Pairplot"),
+                       box(title = span(icon("x"), " Selecione as variáveis de sua preferência"),
                            width = NULL, status = "info", solidHeader = TRUE,
-                           fluidRow(column(width = 6,
-                                           # plotlyOutput("pairplot", height = 500)
-                                           )),
-                           collapsible = TRUE, collapsed = FALSE
+                           pickerInput(
+                             inputId = "variaveis_picker",
+                             label = "Selecione Variáveis:",
+                             choices = names(df[, numeric_columns]),  # Substitua com suas variáveis reais
+                             options = pickerOptions(
+                               actionsBox = TRUE, 
+                               size = 10,
+                               selectedTextFormat = "count > 3"
+                             ), 
+                             multiple = TRUE,
+                             selected = c("IMDB_Rating", "Gross")  # Substitua com suas variáveis preselecionadas
+                           ),
+                           collapsible = TRUE
+                       )
+                )
+              ),
+                
+              fluidRow(
+                column(width = 12,
+                       box(
+                         title = span(icon("chart-line"), "Pair Plot"),
+                         width = NULL, status = "info", solidHeader = TRUE,
+                         plotlyOutput("pair_plot", height = 500),
+                         collapsible = TRUE, collapsed = FALSE,
+                         absolutePanel(
+                           dropdown(
+                             uiOutput("texto_info1"),
+                             style = "unite", icon = icon("circle-info"),
+                             status = "primary", width = "300px",
+                             tooltip = tooltipOptions(title = "Clique para ver mais informações sobre esse gráfico!")),
+                           top = "8%", left = "1%", width = 300, zIndex = 1000 # left = 1% ou 95%
+                         )
                        )
                 )
               )
@@ -75,7 +103,7 @@ ui <- dashboardPage(
       
       tabItem(tabName = "pag2",
               fluidRow(
-                column(width = 4,
+                column(width = 6,
                        box(title = span(icon("x"), " Selecione a variável de sua preferência"),
                            width = NULL, status = "info", solidHeader = TRUE,
                            selectInput("variavel", "Variável Selecionada", setNames(Vars_temp, Vars_temp_nomes), selected = "Gross", selectize = TRUE),
@@ -84,7 +112,7 @@ ui <- dashboardPage(
                 ),
                 
                 column(
-                  width = 4,
+                  width = 6,
                   box(title = span(icon("calendar"), " Selecione o período de sua preferência"),
                       width = NULL, status = "info", solidHeader = TRUE,
                       sliderInput("date_slider", "Período", min = min(df$Released_Year), max = max(df$Released_Year),
@@ -105,7 +133,7 @@ ui <- dashboardPage(
                          collapsible = TRUE, collapsed = FALSE,
                          absolutePanel(
                            dropdown(
-                             uiOutput("texto_info1"),
+                             uiOutput("texto_info2"),
                              style = "unite", icon = icon("circle-info"),
                              status = "primary", width = "300px",
                              tooltip = tooltipOptions(title = "Clique para ver mais informações sobre esse gráfico!")),

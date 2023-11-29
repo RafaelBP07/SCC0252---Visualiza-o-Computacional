@@ -1,6 +1,7 @@
 # Carregar Pacotes
 # install.packages("pacman")
-pacman::p_load(shiny, 
+pacman::p_load(shiny,
+               GGally,
                shinydashboard, 
                shinyWidgets, 
                shinythemes, 
@@ -12,7 +13,6 @@ pacman::p_load(shiny,
                drc,
                ggpubr,
                padr)
-
 #------------------------------------------------------------
 
 # Definir o UI

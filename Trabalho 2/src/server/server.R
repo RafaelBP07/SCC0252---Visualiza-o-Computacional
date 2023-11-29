@@ -19,11 +19,30 @@ server <- function(input, output, session) {
   output$grafico_1 <- renderPlotly({
     render_grafico_1(input)
   })
+    
+  output$pair_plot <- renderPlotly({
+    render_pair_plot(input)
+  })
   
   #================================================================== END: GRÁFICOS
 
   #================================================================== TEXTOS
   output$texto_info1 <- renderUI({
+    tagList(
+      tags$h4(tags$b("Contexto e Justificativa")),
+      tags$p("XXX"),
+      tags$h4(tags$b("Interpretação do Gráfico")),
+      tags$p("XXX"),
+      tags$h4(tags$b("Insights e Observações")),
+      tags$p("XXX"),
+      tags$h4(tags$b("Exemplos e Aplicações Práticas")),
+      tags$p("XXX"),
+      tags$h4(tags$b("Limitações e Considerações Adicionais")),
+      tags$p("XXX")
+    )
+  })
+  
+  output$texto_info2 <- renderUI({
     tagList(
       tags$h4(tags$b("Contexto e Justificativa")),
       tags$p("XXX"),
