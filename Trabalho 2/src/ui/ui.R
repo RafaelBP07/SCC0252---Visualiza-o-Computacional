@@ -85,7 +85,7 @@ ui <- dashboardPage(
                        box(
                          title = span(icon("chart-line"), "Pair Plot"),
                          width = NULL, status = "info", solidHeader = TRUE,
-                         plotlyOutput("pair_plot", height = 500),
+                         plotlyOutput("pair_plot", height = 800),
                          collapsible = TRUE, collapsed = FALSE,
                          absolutePanel(
                            dropdown(
@@ -93,7 +93,7 @@ ui <- dashboardPage(
                              style = "unite", icon = icon("circle-info"),
                              status = "primary", width = "300px",
                              tooltip = tooltipOptions(title = "Clique para ver mais informações sobre esse gráfico!")),
-                           top = "8%", left = "1%", width = 300, zIndex = 1000 # left = 1% ou 95%
+                           top = "5%", left = "1%", width = 300, zIndex = 1000 # left = 1% ou 95%
                          )
                        )
                 )
@@ -127,7 +127,7 @@ ui <- dashboardPage(
               fluidRow(
                 column(width = 12,
                        box(
-                         title = span(icon("chart-line"), " Gráfico Exemplo"),
+                         title = span(icon("chart-line"), " Gráfico de Barras"),
                          width = NULL, status = "info", solidHeader = TRUE,
                          plotlyOutput("grafico_1", height = 500),
                          collapsible = TRUE, collapsed = FALSE,
@@ -147,23 +147,24 @@ ui <- dashboardPage(
               
               fluidRow(
                 column(width = 12,
-                       box(title = span(icon("chart-line"), " XXXXX"),
-                           width = NULL, status = "info", solidHeader = TRUE,
-                           # fluidRow(column(width = 6,
-                           #                 plotlyOutput("grafico_2", height = 500)),
-                           #          column(width = 6,
-                           #                 plotlyOutput("grafico_3", height = 500))),
-                           # fluidRow(column(width = 6,
-                           #                 plotlyOutput("grafico_4", height = 500)),
-                           #          column(width = 6,
-                           #                 plotlyOutput("grafico_5", height = 500))),
-                           collapsible = TRUE, collapsed = TRUE
+                       box(
+                         title = span(icon("chart-line"), " Gráfico de Linhas"),
+                         width = NULL, status = "info", solidHeader = TRUE,
+                         plotlyOutput("grafico_2", height = 500),
+                         collapsible = TRUE, collapsed = FALSE,
+                         absolutePanel(
+                           dropdown(
+                             uiOutput("texto_info3"),
+                             style = "unite", icon = icon("circle-info"),
+                             status = "primary", width = "300px",
+                             tooltip = tooltipOptions(title = "Clique para ver mais informações sobre esse gráfico!")),
+                           top = "8%", left = "1%", width = 300, zIndex = 1000 # left = 1% ou 95%
+                         )
                        )
                 )
               )
+      
       ),
-      
-      
       
       tabItem("pag3",
               fluidRow(

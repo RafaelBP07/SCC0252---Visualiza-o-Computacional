@@ -24,6 +24,10 @@ server <- function(input, output, session) {
     render_pair_plot(input)
   })
   
+  output$grafico_2 <- renderPlotly({
+    render_grafico_2(input)
+  })
+  
   #================================================================== END: GRÁFICOS
 
   #================================================================== TEXTOS
@@ -43,6 +47,21 @@ server <- function(input, output, session) {
   })
   
   output$texto_info2 <- renderUI({
+    tagList(
+      tags$h4(tags$b("Contexto e Justificativa")),
+      tags$p("XXX"),
+      tags$h4(tags$b("Interpretação do Gráfico")),
+      tags$p("XXX"),
+      tags$h4(tags$b("Insights e Observações")),
+      tags$p("XXX"),
+      tags$h4(tags$b("Exemplos e Aplicações Práticas")),
+      tags$p("XXX"),
+      tags$h4(tags$b("Limitações e Considerações Adicionais")),
+      tags$p("XXX")
+    )
+  })
+  
+  output$texto_info3 <- renderUI({
     tagList(
       tags$h4(tags$b("Contexto e Justificativa")),
       tags$p("XXX"),
