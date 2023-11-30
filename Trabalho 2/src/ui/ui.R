@@ -4,7 +4,7 @@ pacman::p_load(shiny,
                shinyWidgets, 
                plotly)
 
-#------------------------------------------------------------
+#------------------------------------------------------------------------------------------------------------------------
 
 # Carregar dados
 df <- read.csv('https://raw.githubusercontent.com/RafaelBP07/SCC0252-Visualizacao-Computacional/main/Trabalho%201/pre_processed_data.csv')
@@ -26,7 +26,7 @@ df_sum <- aggregate(. ~ Released_Year, data = df[, numeric_columns], FUN = sum, 
 # Média por ano
 df_mean <- aggregate(. ~ Released_Year, data = df[, numeric_columns], FUN = mean, na.rm = TRUE)
 
-#------------------------------------------------------------
+#------------------------------------------------------------------------------------------------------------------------
 
 # Input filtros
 
@@ -41,7 +41,7 @@ Vars_comp <- setdiff(Vars_comp, c(Vars_temp, "Released_Year", "Series_Title"))
 Vars_comp_nomes <- Vars_comp
 
 
-#------------------------------------------------------------
+#------------------------------------------------------------------------------------------------------------------------
 
 # Definir o UI
 ui <- dashboardPage(
@@ -54,6 +54,9 @@ ui <- dashboardPage(
       menuItem("Sobre", tabName = "pag4",icon = icon("circle-info"))
     )
   ),
+  
+  #------------------------------------------------------------------------------------------------------------------------
+  
   dashboardBody(
     uiOutput("style"),
     chooseSliderSkin("Flat"),
@@ -66,14 +69,14 @@ ui <- dashboardPage(
                            pickerInput(
                              inputId = "variaveis_picker",
                              label = "Selecione Variáveis:",
-                             choices = names(df[, numeric_columns]),  # Substitua com suas variáveis reais
+                             choices = sort(names(df[, numeric_columns])),
                              options = pickerOptions(
                                actionsBox = TRUE, 
                                size = 10,
                                selectedTextFormat = "count > 3"
                              ), 
                              multiple = TRUE,
-                             selected = c("IMDB_Rating", "Gross")  # Substitua com suas variáveis preselecionadas
+                             selected = c("IMDB_Rating", "Gross")
                            ),
                            collapsible = TRUE
                        )
@@ -85,21 +88,24 @@ ui <- dashboardPage(
                        box(
                          title = span(icon("chart-line"), "Pair Plot"),
                          width = NULL, status = "info", solidHeader = TRUE,
-                         plotlyOutput("pair_plot", height = 800),
+                         plotlyOutput("pairplot", height = 800),
+                         plotlyOutput("boxplot", height = 400),
                          collapsible = TRUE, collapsed = FALSE,
                          absolutePanel(
                            dropdown(
-                             uiOutput("texto_info1"),
+                             uiOutput("info_text_pairplot1"),
                              style = "unite", icon = icon("circle-info"),
                              status = "primary", width = "300px",
                              tooltip = tooltipOptions(title = "Clique para ver mais informações sobre esse gráfico!")),
-                           top = "5%", left = "1%", width = 300, zIndex = 1000 # left = 1% ou 95%
+                           top = "4%", left = "1%", width = 300, zIndex = 1000 # left = 1% ou 95%
                          )
                        )
                 )
               )
               
       ),
+      
+      #------------------------------------------------------------------------------------------------------------------------
       
       tabItem(tabName = "pag2",
               fluidRow(
@@ -129,11 +135,11 @@ ui <- dashboardPage(
                        box(
                          title = span(icon("chart-line"), " Gráfico de Barras"),
                          width = NULL, status = "info", solidHeader = TRUE,
-                         plotlyOutput("grafico_1", height = 500),
+                         plotlyOutput("barplot", height = 500),
                          collapsible = TRUE, collapsed = FALSE,
                          absolutePanel(
                            dropdown(
-                             uiOutput("texto_info2"),
+                             uiOutput("info_text_barplot1"),
                              style = "unite", icon = icon("circle-info"),
                              status = "primary", width = "300px",
                              tooltip = tooltipOptions(title = "Clique para ver mais informações sobre esse gráfico!")),
@@ -150,11 +156,11 @@ ui <- dashboardPage(
                        box(
                          title = span(icon("chart-line"), " Gráfico de Linhas"),
                          width = NULL, status = "info", solidHeader = TRUE,
-                         plotlyOutput("grafico_2", height = 500),
+                         plotlyOutput("lineplot", height = 500),
                          collapsible = TRUE, collapsed = FALSE,
                          absolutePanel(
                            dropdown(
-                             uiOutput("texto_info3"),
+                             uiOutput("info_text_lineplot1"),
                              style = "unite", icon = icon("circle-info"),
                              status = "primary", width = "300px",
                              tooltip = tooltipOptions(title = "Clique para ver mais informações sobre esse gráfico!")),
@@ -162,9 +168,30 @@ ui <- dashboardPage(
                          )
                        )
                 )
-              )
+              ),
+              
+              fluidRow(
+                column(width = 12,
+                       box(
+                         title = span(icon("chart-line"), " Gráfico de Calor"),
+                         width = NULL, status = "info", solidHeader = TRUE,
+                         plotlyOutput("heatmap", height = 600),
+                         collapsible = TRUE, collapsed = FALSE,
+                         absolutePanel(
+                           dropdown(
+                             uiOutput("info_text_heatmap1"),
+                             style = "unite", icon = icon("circle-info"),
+                             status = "primary", width = "300px",
+                             tooltip = tooltipOptions(title = "Clique para ver mais informações sobre esse gráfico!")),
+                           top = "8%", left = "1%", width = 300, zIndex = 1000 # left = 1% ou 95%
+                         )
+                       )
+                )
+              ),
       
       ),
+      
+      #------------------------------------------------------------------------------------------------------------------------
       
       tabItem("pag3",
               fluidRow(
@@ -198,6 +225,8 @@ ui <- dashboardPage(
               )
               
       ),
+      
+      #------------------------------------------------------------------------------------------------------------------------
       
       tabItem("pag4",
               fluidRow(

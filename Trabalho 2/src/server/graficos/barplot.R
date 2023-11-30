@@ -1,9 +1,9 @@
-# Funçao geral para o grafico de series
+# Funçao geral para o grafico de barras
 
 #-----------------------------------------------------------------------------------------------
 
 # Função que gera o gráfico de barras
-grafico_1 <- function(data, x_var, y_var, titulo_grafico, eixo_x, eixo_y) {
+bar_plot <- function(data, x_var, y_var, titulo_grafico, eixo_x, eixo_y) {
   p <- ggplot(data, aes(x = !!x_var, y = !!y_var)) +
     geom_bar(stat = "identity", fill = "#2596be") +
     labs(title = titulo_grafico, x = eixo_x, y = eixo_y) +
@@ -20,7 +20,7 @@ grafico_1 <- function(data, x_var, y_var, titulo_grafico, eixo_x, eixo_y) {
 #-----------------------------------------------------------------------------------------------
 
 # Função que renderiza o gráfico de barras para as variáveis especificadas
-render_grafico_1 <- function(input) {
+render_barplot <- function(input) {
   variavel_x <- as.name("Released_Year")
   variavel_y <- as.name(input$variavel)
   periodo <- input$date_slider
@@ -34,8 +34,8 @@ render_grafico_1 <- function(input) {
   data <- carregar_dados("sum", periodo)
   
   # Utiliza a função grafico_1 para gerar o gráfico
-  p <- grafico_1(data = data, x_var = variavel_x, y_var = variavel_y, 
-                 titulo_grafico = "titulo", eixo_x = "X", eixo_y = "Y")
+  p <- bar_plot(data = data, x_var = variavel_x, y_var = variavel_y, 
+               titulo_grafico = "titulo", eixo_x = "X", eixo_y = "Y")
   
   return(p)
 }
