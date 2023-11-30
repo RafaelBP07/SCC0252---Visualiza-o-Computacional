@@ -44,5 +44,15 @@ Explore e compreenda a classificação dos top 1000 filmes no IMDb através de u
 [Acesse o Deploy da Aplicação!]() **Deploy Temporariamente Indisponível**
 
 ### Algumas Capturas de Tela:
-![Aba 1](https://github.com/RafaelBP07/SCC0252-Visualizacao-Computacional/issues/1#issue-2019477234)
-![Aba 2](https://github.com/RafaelBP07/SCC0252-Visualizacao-Computacional/issues/2#issue-2019478011)
+![Aba 1](https://github.com/RafaelBP07/SCC0252-Visualizacao-Computacional/assets/88207679/f7c55a0e-c4d9-4f94-91f5-2af9eda48403){width=50%}
+
+
+
+![Aba 2](https://github.com/RafaelBP07/SCC0252-Visualizacao-Computacional/assets/88207679/84c275f4-df9f-4914-a621-dd4d6aae5b96){width=50%}
+
+
+### Algumas Capturas de Tela:
+
+<img src="https://github.com/RafaelBP07/SCC0252-Visualizacao-Computacional/assets/88207679/f7c55a0e-c4d9-4f94-91f5-2af9eda48403" width="400" height="300" /> 
+<img src="https://github.com/RafaelBP07/SCC0252-Visualizacao-Computacional/assets/88207679/84c275f4-df9f-4914-a621-dd4d6aae5b96" width="400" height="300" />
+
