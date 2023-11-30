@@ -1,11 +1,10 @@
 # Carregar Pacotes
-# install.packages("pacman")
+if(!require(pacman)) install.packages("pacman")
 pacman::p_load(shiny,
                GGally,
                shinydashboard, 
                shinyWidgets, 
                shinythemes, 
-               COVID19, 
                fpp3, 
                plotly, 
                forecast, 
