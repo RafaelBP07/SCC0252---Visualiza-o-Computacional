@@ -13,6 +13,7 @@ grafico_2 <- function(data, x_var, y_var, titulo_grafico, eixo_x, eixo_y) {
 render_grafico_2 <- function(input) {
   variavel_x <- as.name("Released_Year")
   variavel_y <- as.name(input$variavel)
+  periodo <- input$date_slider
   
   # Verifica se as variáveis são colunas válidas nos dados
   if (!(as.character(variavel_x) %in% names(df) && as.character(variavel_y) %in% names(df))) {
@@ -20,13 +21,10 @@ render_grafico_2 <- function(input) {
   }
   
   # Carrega os dados
-  data <- carregar_dados("sum")
-  
-  # Filtra os dados com base no valor do slider
-  data_filtrado <- data[data$Released_Year >= input$date_slider[1] & data$Released_Year <= input$date_slider[2], ]
+  data <- carregar_dados("sum", periodo)
   
   # Utiliza a função grafico_2 para gerar o gráfico de linhas
-  p <- grafico_2(data = data_filtrado, x_var = variavel_x, y_var = variavel_y,
+  p <- grafico_2(data = data, x_var = variavel_x, y_var = variavel_y,
                  titulo_grafico = 'titulo', eixo_x = 'X', eixo_y = 'Y')
   
   return(p)

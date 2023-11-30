@@ -1,3 +1,5 @@
-source("./src/server/graficos/exemplo.R")
 source("./src/server/graficos/pairplot.R")
+source("./src/server/graficos/barplot.R")
 source("./src/server/graficos/linhas.R")
+source("./src/server/graficos/boxplot.R")
+source("./src/server/graficos/heatmap.R")
