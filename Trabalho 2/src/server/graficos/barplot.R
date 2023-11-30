@@ -24,6 +24,7 @@ render_barplot <- function(input) {
   variavel_x <- as.name("Released_Year")
   variavel_y <- as.name(input$variavel)
   periodo <- input$date_slider
+  medida <- input$medida_resumo
   
   # Verifica se as variáveis são colunas válidas nos dados
   if (!(as.character(variavel_x) %in% names(df) && as.character(variavel_y) %in% names(df))) {
@@ -31,7 +32,7 @@ render_barplot <- function(input) {
   }
   
   # Carrega os dados
-  data <- carregar_dados("sum", periodo)
+  data <- carregar_dados(medida, periodo)
   
   # Utiliza a função grafico_1 para gerar o gráfico
   p <- bar_plot(data = data, x_var = variavel_x, y_var = variavel_y, 

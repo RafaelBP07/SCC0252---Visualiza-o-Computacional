@@ -32,8 +32,12 @@ server <- function(input, output, session) {
     render_lineplot(input)
   })
   
-  output$heatmap <- renderPlotly({
+  output$heatmap1 <- renderPlotly({
     render_heatmap(input)
+  })
+  
+  output$heatmap2 <- renderPlotly({
+    render_heatmap(input, TRUE)
   })
   
   #================================================================== END: GRÁFICOS
