@@ -40,6 +40,10 @@ server <- function(input, output, session) {
     render_heatmap(input, TRUE)
   })
   
+  output$countplot <- renderPlotly({
+    render_countplot(input)
+  })
+  
   #================================================================== END: GRÁFICOS
 
   #================================================================== TEXTOS
@@ -89,6 +93,21 @@ server <- function(input, output, session) {
   })
   
   output$info_text_heatmap1 <- renderUI({
+    tagList(
+      tags$h4(tags$b("Contexto e Justificativa")),
+      tags$p("XXX"),
+      tags$h4(tags$b("Interpretação do Gráfico")),
+      tags$p("XXX"),
+      tags$h4(tags$b("Insights e Observações")),
+      tags$p("XXX"),
+      tags$h4(tags$b("Exemplos e Aplicações Práticas")),
+      tags$p("XXX"),
+      tags$h4(tags$b("Limitações e Considerações Adicionais")),
+      tags$p("XXX")
+    )
+  })
+  
+  output$info_text_countplot <- renderUI({
     tagList(
       tags$h4(tags$b("Contexto e Justificativa")),
       tags$p("XXX"),

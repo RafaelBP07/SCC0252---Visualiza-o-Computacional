@@ -9,6 +9,11 @@ pacman::p_load(shiny,
 # Carregar dados
 df <- read.csv('https://raw.githubusercontent.com/RafaelBP07/SCC0252-Visualizacao-Computacional/main/Trabalho%201/pre_processed_data.csv')
 
+df <- unite(df, Star, Star1, Star2, Star3, Star4, sep = ", ", remove = FALSE)
+
+df <- df[, !(names(df) %in% c("Star1", "Star2", "Star3", "Star4"))]
+
+  
 # # Opção agrupando colunas com texto
 # # Soma por ano
 # df_sum <- aggregate(. ~ Released_Year, data = df, FUN = function(x) if(is.numeric(x)) sum(x, na.rm = TRUE) else x)
@@ -47,8 +52,8 @@ Medidas_resumo_nomes <- c("Soma por ano", "Media por ano")
 # Aba Comparação
 Vars_comp <- names(df)
 Vars_comp <- sort(setdiff(Vars_comp, c(Vars_temp, "Released_Year", "Series_Title")))
-Vars_comp_nomes <- c("Certificado", "Diretor", "Gênero", "Estrela1", "Estrela2", "Estrela3", "Estrela4")
-
+Vars_comp_nomes <- c("Classificação", "Diretor", "Gênero", "Estrela")
+Vars_comp_medidas <- c("Quantidade de Filmes", "Faturamento", "Faturamento Médio")
 
 #------------------------------------------------------------------------------------------------------------------------
 
@@ -217,8 +222,8 @@ ui <- dashboardPage(
                 column(width = 4,
                        box(title = span(icon("x"), " Selecione a variável de sua preferência"),
                            width = NULL, status = "info", solidHeader = TRUE,
-                           selectInput("variavel_x", "Variável Eixo X", setNames(Vars_comp, Vars_comp_nomes), selected = "X", selectize = TRUE),
-                           selectInput("variavel_y", "Variável Eixo Y", setNames(Vars_comp, Vars_comp_nomes), selected = "X", selectize = TRUE),
+                           selectInput("variavel_y", "Variável Eixo Y", choices = Vars_comp_medidas, selected = 'Quantidade de Filmes', selectize = TRUE),
+                           selectInput("variavel_x", "Variável Eixo X", setNames(Vars_comp, Vars_comp_nomes), selected = "Certificate", selectize = TRUE),
                            collapsible = TRUE
                        )
                 ),
@@ -228,20 +233,22 @@ ui <- dashboardPage(
               
               fluidRow(
                 column(width = 12,
-                       box(title = span(icon("chart-line"), " XXXXX"),
-                           width = NULL, status = "info", solidHeader = TRUE,
-                           # fluidRow(column(width = 6,
-                           #                 plotlyOutput("grafico_2", height = 500)),
-                           #          column(width = 6,
-                           #                 plotlyOutput("grafico_3", height = 500))),
-                           # fluidRow(column(width = 6,
-                           #                 plotlyOutput("grafico_4", height = 500)),
-                           #          column(width = 6,
-                           #                 plotlyOutput("grafico_5", height = 500))),
-                           collapsible = TRUE, collapsed = FALSE
+                       box(
+                         title = span(icon("chart-line"), " Countplot"),
+                         width = NULL, status = "info", solidHeader = TRUE,
+                         plotlyOutput("countplot", height = 600),
+                         collapsible = TRUE, collapsed = FALSE,
+                         absolutePanel(
+                           dropdown(
+                             uiOutput("info_text_countplot"),
+                             style = "unite", icon = icon("circle-info"),
+                             status = "primary", width = "300px",
+                             tooltip = tooltipOptions(title = "Clique para ver mais informações sobre esse gráfico!")),
+                           top = "8%", left = "1%", width = 300, zIndex = 1000 # left = 1% ou 95%
+                         )
                        )
                 )
-              )
+              ),
               
       ),
       
