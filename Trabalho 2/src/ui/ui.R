@@ -54,6 +54,7 @@ Vars_comp <- names(df)
 Vars_comp <- sort(setdiff(Vars_comp, c(Vars_temp, "Released_Year", "Series_Title")))
 Vars_comp_nomes <- c("Classificação", "Diretor", "Gênero", "Estrela")
 Vars_comp_medidas <- c("Quantidade de Filmes", "Faturamento", "Faturamento Médio")
+top_ns <- seq(5, 30, by=5)
 
 #------------------------------------------------------------------------------------------------------------------------
 
@@ -222,8 +223,23 @@ ui <- dashboardPage(
                 column(width = 4,
                        box(title = span(icon("x"), " Selecione a variável de sua preferência"),
                            width = NULL, status = "info", solidHeader = TRUE,
-                           selectInput("variavel_y", "Variável Eixo Y", choices = Vars_comp_medidas, selected = 'Quantidade de Filmes', selectize = TRUE),
-                           selectInput("variavel_x", "Variável Eixo X", setNames(Vars_comp, Vars_comp_nomes), selected = "Certificate", selectize = TRUE),
+                           selectInput("variavel_y", "Classe", setNames(Vars_comp, Vars_comp_nomes), selected = "Certificate", selectize = TRUE),
+                           selectInput("top_n", "Classe", top_ns, selected = "10", selectize = TRUE),
+                           collapsible = TRUE
+                       )
+                ),
+                column(width = 4,
+                       box(title = span(icon("x"), " Selecione a variável de sua preferência"),
+                           width = NULL, status = "info", solidHeader = TRUE,
+                           selectInput("variavel_x", "Variável Selecionada", setNames(Vars_temp, Vars_temp_nomes), selected = "Gross", selectize = TRUE),
+                           selectInput("medida_resumo_1", "Medida Selecionada", setNames(Medidas_resumo, Medidas_resumo_nomes), selected = "sum", selectize = TRUE),
+                           collapsible = TRUE
+                       )
+                ),
+                column(width = 4,
+                       box(title = span(icon("x"), " Selecione a variável de sua preferência"),
+                           width = NULL, status = "info", solidHeader = TRUE,
+                           # selectInput("ascending", "Medida Selecionada", setNames(Medidas_resumo, Medidas_resumo_nomes), selected = "sum", selectize = TRUE),
                            collapsible = TRUE
                        )
                 ),
