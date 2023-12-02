@@ -63,7 +63,7 @@ ui <- dashboardPage(
   dashboardHeader(title = span(icon("film"), "Top 1000 Filmes")),
   dashboardSidebar(
     sidebarMenu(
-      menuItem("Pairplot", tabName = "pag1", icon = icon("chart-line")),
+      menuItem("Visão Geral", tabName = "pag1", icon = icon("chart-line")),
       menuItem("Análise Temporal", tabName = "pag2", icon = icon("timeline")),
       menuItem("Comparação", tabName = "pag3",icon = icon("arrow-down-up-across-line")),
       menuItem("Sobre", tabName = "pag4",icon = icon("circle-info"))
@@ -101,7 +101,7 @@ ui <- dashboardPage(
               fluidRow(
                 column(width = 12,
                        box(
-                         title = span(icon("chart-line"), "Pair Plot"),
+                         title = span(icon("chart-column"), "Análise de correlação e distribuição"),
                          width = NULL, status = "info", solidHeader = TRUE,
                          plotlyOutput("pairplot", height = 800),
                          plotlyOutput("boxplot", height = 400),
@@ -144,7 +144,7 @@ ui <- dashboardPage(
                 
                 column(
                   width = 4,
-                  box(title = span(icon("database"), " Selecione a medida resumo por ano de sua preferência"),
+                  box(title = span(icon("database"), " Selecione a medida resumo de sua preferência"),
                       width = NULL, status = "info", solidHeader = TRUE,
                       selectInput("medida_resumo", "Medida Selecionada", setNames(Medidas_resumo, Medidas_resumo_nomes), selected = "sum", selectize = TRUE),
                       collapsible = TRUE
@@ -154,31 +154,10 @@ ui <- dashboardPage(
               ),
               
               
-              # fluidRow(
-              #   column(width = 12,
-              #          box(
-              #            title = span(icon("chart-line"), " Gráfico de Barras"),
-              #            width = NULL, status = "info", solidHeader = TRUE,
-              #            plotlyOutput("barplot", height = 500),
-              #            collapsible = TRUE, collapsed = FALSE,
-              #            absolutePanel(
-              #              dropdown(
-              #                uiOutput("info_text_barplot1"),
-              #                style = "unite", icon = icon("circle-info"),
-              #                status = "primary", width = "300px",
-              #                tooltip = tooltipOptions(title = "Clique para ver mais informações sobre esse gráfico!")),
-              #              top = "8%", left = "1%", width = 300, zIndex = 1000 # left = 1% ou 95%
-              #            )
-              #          )
-              #   )
-              # ),
-              
-              
-              
               fluidRow(
                 column(width = 12,
                        box(
-                         title = span(icon("chart-line"), " Gráfico de Linhas"),
+                         title = span(icon("chart-line"), " Análise temporal para as principais variáveis"),
                          width = NULL, status = "info", solidHeader = TRUE,
                          plotlyOutput("lineplot", height = 500),
                          plotlyOutput("heatmap1", height = 600),
@@ -195,10 +174,32 @@ ui <- dashboardPage(
                 )
               ),
               
+              
+              fluidRow(
+                column(width = 4,
+                       box(title = span(icon("square-check"), " Selecione a classe de sua preferência"),
+                           width = NULL, status = "info", solidHeader = TRUE,
+                           radioGroupButtons(
+                             inputId = "certificado",
+                             label = "Label",
+                             choices = c("Gênero", 
+                                         "Classificação"),
+                             checkIcon = list(
+                               yes = icon("ok",
+                                          lib = "glyphicon")),
+                             justified = TRUE
+                           ),
+                           collapsible = TRUE
+                       )
+                ),
+                
+              ),
+              
+              
               fluidRow(
                 column(width = 12,
                        box(
-                         title = span(icon("chart-line"), " Gráfico de Calor"),
+                         title = span(icon("chart-line"), " Análise temporal da contagem de filmes"),
                          width = NULL, status = "info", solidHeader = TRUE,
                          plotlyOutput("heatmap2", height = 600),
                          collapsible = TRUE, collapsed = FALSE,
@@ -213,6 +214,7 @@ ui <- dashboardPage(
                        )
                 )
               ),
+              
       
       ),
       
@@ -221,7 +223,7 @@ ui <- dashboardPage(
       tabItem("pag3",
               fluidRow(
                 column(width = 4,
-                       box(title = span(icon("x"), " Selecione a variável de sua preferência"),
+                       box(title = span(icon("magnifying-glass"), " Selecione a classe de sua preferência"),
                            width = NULL, status = "info", solidHeader = TRUE,
                            selectInput("variavel_y", "Classe", setNames(Vars_comp, Vars_comp_nomes), selected = "Certificate", selectize = TRUE),
                            selectInput("top_n", "Classe", top_ns, selected = "10", selectize = TRUE),
@@ -229,7 +231,7 @@ ui <- dashboardPage(
                        )
                 ),
                 column(width = 4,
-                       box(title = span(icon("x"), " Selecione a variável de sua preferência"),
+                       box(title = span(icon("x"), " Selecione a variável e medida resumo de sua preferência"),
                            width = NULL, status = "info", solidHeader = TRUE,
                            selectInput("variavel_x", "Variável Selecionada", setNames(Vars_temp, Vars_temp_nomes), selected = "Gross", selectize = TRUE),
                            selectInput("medida_resumo_1", "Medida Selecionada", setNames(Medidas_resumo, Medidas_resumo_nomes), selected = "sum", selectize = TRUE),
@@ -237,9 +239,18 @@ ui <- dashboardPage(
                        )
                 ),
                 column(width = 4,
-                       box(title = span(icon("x"), " Selecione a variável de sua preferência"),
+                       box(title = span(icon("arrow-down-wide-short"), " Selecione a variável de sua preferência"),
                            width = NULL, status = "info", solidHeader = TRUE,
-                           # selectInput("ascending", "Medida Selecionada", setNames(Medidas_resumo, Medidas_resumo_nomes), selected = "sum", selectize = TRUE),
+                           radioGroupButtons(
+                             inputId = "ascending",
+                             label = "Label",
+                             choices = c("Top", 
+                                         "Tail"),
+                             checkIcon = list(
+                               yes = icon("ok",
+                                          lib = "glyphicon")),
+                             justified = TRUE
+                           ),
                            collapsible = TRUE
                        )
                 ),
@@ -250,7 +261,7 @@ ui <- dashboardPage(
               fluidRow(
                 column(width = 12,
                        box(
-                         title = span(icon("chart-line"), " Countplot"),
+                         title = span(icon("chart-bar"), " Análise em função de variáveis categóricas"),
                          width = NULL, status = "info", solidHeader = TRUE,
                          plotlyOutput("countplot", height = 600),
                          collapsible = TRUE, collapsed = FALSE,

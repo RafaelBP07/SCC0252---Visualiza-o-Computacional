@@ -3,7 +3,60 @@
 #-----------------------------------------------------------------------------------------------
 
 # Função para criar um gráfico de calor
-heatmap_plot <- function(data, measure = "count", variable = NULL) {
+heatmap_plot <- function(data, measure = "count", variable = NULL, Certificado = FALSE) {
+  if (Certificado == "Classificação"){
+    if (is.null(variable)) {
+      # Contar o número total de filmes por certificado e ano
+      df_certificate <- data %>%
+        group_by(Released_Year, Certificate) %>%
+        summarize(count = n())
+    } else {
+      # Usar a medida resumo (soma ou média) para a variável específica
+      df_certificate <- data %>%
+        group_by(Released_Year, Certificate) %>%
+        summarize(count = switch(
+          measure,
+          "sum" = sum(!!sym(variable)),
+          "mean" = mean(!!sym(variable))
+        ))
+    }
+    
+    # Ordenar os certificados pelo número total de filmes
+    certificate_order <- df_certificate %>%
+      group_by(Certificate) %>%
+      summarize(total_count = sum(count)) %>%
+      arrange(desc(total_count)) %>%
+      pull(Certificate)
+    
+    df_certificate$Certificate <- factor(df_certificate$Certificate, levels = rev(certificate_order))  # Inverter a ordem dos níveis
+    
+    # Criar o gráfico de mapa de calor
+    certificate_heatmap_plot <- ggplot(df_certificate, aes(x = Released_Year, y = Certificate, fill = count)) +
+      geom_tile() +
+      scale_fill_gradient(low = "white", high = "#2596be") +
+      labs(title = switch(
+        measure,
+        "count" = "Mapa de Calor da Contagem de Filmes por Classificação ao Longo dos Anos",
+        "sum" = paste("Mapa de Calor da Soma de", variable, "por Classificação ao Longo dos Anos"),
+        "mean" = paste("Mapa de Calor da Média de", variable, "por Classificação ao Longo dos Anos")
+      ),
+      x = "Ano de Lançamento",
+      y = "Classificação",
+      fill = switch(
+        measure,
+        "count" = "Contagem",
+        "sum" = "Soma",
+        "mean" = "Média"
+      )) +
+      theme_classic() +
+      theme(axis.text.x = element_text(angle = 45, hjust = 1))
+    
+    # Converter para plotly
+    certificate_heatmap_plotly <- ggplotly(certificate_heatmap_plot)
+    
+    return(certificate_heatmap_plotly)
+  }
+  
   if (is.null(variable)) {
     # Contar o número total de filmes por gênero e ano
     df_genre <- data %>%
@@ -61,6 +114,8 @@ heatmap_plot <- function(data, measure = "count", variable = NULL) {
 # # Exemplo de uso da função
 # # Contagem total de filmes por gênero e ano
 # heatmap_plot(df)
+# # Contagem total de filmes por classificação e ano
+# heatmap_plot(df, Certificado = TRUE)
 # 
 # # Soma do faturamento por gênero e ano
 # heatmap_plot(df, measure = "sum", variable = "Gross")
@@ -70,22 +125,33 @@ heatmap_plot <- function(data, measure = "count", variable = NULL) {
 
 #-----------------------------------------------------------------------------------------------
 
-# Função que renderiza o gráfico de calor para o periodo especificado
-render_heatmap <- function(input, gerar_padrao=FALSE) {
+# Função que renderiza o gráfico de calor para o período especificado
+render_heatmap <- function(input, gerar_padrao = FALSE) {
   variavel <- as.name(input$variavel)
   periodo <- input$date_slider
   medida <- input$medida_resumo
-
+  certificado <- input$certificado
+  
   # Carrega os dados
   data <- carregar_dados("", periodo)
-
+  
+  # # Gera o heatmap padrão se 'gerar_padrao' estiver definido como TRUE
+  # if (gerar_padrao && certificado == "Classificação") {
+  #   p <- heatmap_plot(data, Certificado = TRUE)
+  #   # Gera o heatmap com a classificação se 'certificado' estiver definido como "Classificação"
+  # } else if (gerar_padrao) {
+  #   p <- heatmap_plot(data)
+  # } else {
+  #   # Utiliza a função heatmap_plot para gerar o gráfico com os parâmetros fornecidos
+  #   p <- heatmap_plot(data, medida, variavel)
+  # }
   # Gera o heatmap padrão se 'gerar_padrao' estiver definido como TRUE
   if (gerar_padrao) {
-    p <- heatmap_plot(data)
+    p <- heatmap_plot(data, Certificado = certificado)
   } else {
     # Utiliza a função heatmap_plot para gerar o gráfico com os parâmetros fornecidos
-    p <- heatmap_plot(data, medida, variavel)
+    p <- heatmap_plot(data, medida, variavel, certificado)
   }
-
+  
   return(p)
 }
