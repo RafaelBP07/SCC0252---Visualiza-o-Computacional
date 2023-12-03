@@ -50,15 +50,15 @@ server <- function(input, output, session) {
   output$info_text_pairplot1 <- renderUI({
     tagList(
       tags$h4(tags$b("Contexto e Justificativa")),
-      tags$p("XXX"),
+      tags$p("X"),
       tags$h4(tags$b("Interpretação do Gráfico")),
-      tags$p("XXX"),
+      tags$p("X"),
       tags$h4(tags$b("Insights e Observações")),
-      tags$p("XXX"),
+      tags$p("X"),
       tags$h4(tags$b("Exemplos e Aplicações Práticas")),
-      tags$p("XXX"),
+      tags$p("X"),
       tags$h4(tags$b("Limitações e Considerações Adicionais")),
-      tags$p("XXX")
+      tags$p("X")
     )
   })
   
