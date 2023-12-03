@@ -1,42 +1,54 @@
-# Funçao geral para o grafico de barras
+traducao <- c("Genre" = "Gêneros",
+              "Star" = "Estrelas",
+              "Certificate" = "Classificações",
+              "Director" = "Diretores",
+              "Gross" = "Faturamento",
+              "IMDB_Rating" = "Avaliação IMDB",
+              "Meta_score" = "Pontuação Meta",
+              "No_of_Votes" = "Número de Votos",
+              "Runtime" = "Duração")
 
-#-----------------------------------------------------------------------------------------------
+# Função para substituir valores com base no mapeamento
+tradutor <- function(variavel, traducao) {
+  variavel_pt <- traducao[variavel]
 
-# Função que gera o gráfico de barras
-bar_plot <- function(data, x_var, y_var, titulo_grafico, eixo_x, eixo_y) {
-  p <- ggplot(data, aes(x = !!x_var, y = !!y_var)) +
-    geom_bar(stat = "identity", fill = "#2596be") +
-    labs(title = titulo_grafico, x = eixo_x, y = eixo_y) +
-    theme_minimal()
-  
-  fig <- ggplotly(p)
-  return(fig)
+  return(variavel_pt)
 }
 
-# Exemplo de uso da função
-# grafico_1(data = df, x_var = Released_Year, y_var = Gross, 
-          # titulo_grafico = "Título do Gráfico", eixo_x = "Eixo X", eixo_y = "Eixo Y")
+# Função para criar um barplot
+barplot <- function(data, variavel, top_n, variavel_x, medida_resumo, ascending) {
+  
+  top_values <- calculate_top_values(df, variavel, top_n, variavel_x, medida_resumo, ascending)
+
+  variavel <- tradutor(variavel, traducao)
+  
+  variavel_x <- tradutor(variavel_x, traducao)
+  
+  p <- ggplot(top_values, aes(x = Variavel, y = if (ascending) reorder(Class, Variavel) else reorder(Class, -Variavel))) +
+    geom_bar(stat = "identity", fill = "#2596be") +
+    labs(title = paste(min(top_n, length(top_values$Class)), variavel, "de", ifelse(ascending, "Maior", "Menor"), variavel_x, ifelse(medida_resumo == "sum", "(Total)", "(Média)")), x = variavel_x, y = variavel) +  # Substitua Class pelo nome da sua variável
+    theme_minimal() +
+    theme(axis.text.x = element_text(angle = 45, hjust = 1))
+  
+  interativo <- ggplotly(p)
+  return(interativo)
+  
+}
 
 #-----------------------------------------------------------------------------------------------
 
-# Função que renderiza o gráfico de barras para as variáveis especificadas
+# Função que renderiza o gráfico de contagem
 render_barplot <- function(input) {
-  variavel_x <- as.name("Released_Year")
-  variavel_y <- as.name(input$variavel)
-  periodo <- input$date_slider
-  medida <- input$medida_resumo
+  classe <- input$variavel_y
+  top_n <- input$top_n
+  variavel_x <- input$variavel_x
+  medida_resumo_1 <- input$medida_resumo_1
+  ascending <- input$ascending
   
-  # Verifica se as variáveis são colunas válidas nos dados
-  if (!(as.character(variavel_x) %in% names(df) && as.character(variavel_y) %in% names(df))) {
-    stop("Pelo menos uma das variáveis não é uma coluna válida nos dados.")
-  }
+  data <- carregar_dados("")
   
-  # Carrega os dados
-  data <- carregar_dados(medida, periodo)
-  
-  # Utiliza a função grafico_1 para gerar o gráfico
-  p <- bar_plot(data = data, x_var = variavel_x, y_var = variavel_y, 
-               titulo_grafico = "titulo", eixo_x = "X", eixo_y = "Y")
+  # Utiliza a função pair_plot para gerar o pair plot
+  p <- barplot(data, classe, top_n, variavel_x, medida_resumo_1, ascending)
   
   return(p)
 }

@@ -66,43 +66,21 @@ calculate_top_values <- function(data, Class, top_n = 10,
 #-----------------------------------------------------------------------------------------------
 
 # Função para criar um countplot
-countplot <- function(data, variavel, medida) {
-  if (medida == 'Quantidade de Filmes') {
-    # Verificar se a variável é 'Genre' antes de ordenar e selecionar os 10 principais valores
-    if (variavel == "Genre") {
-      top_values <- calculate_top_values(df, 'Genre', 10)
-      variavel = "Gêneros"
-    }
+countplot <- function(data, variavel, top_n, ascending) {
+  
+  top_values <- calculate_top_values(df, variavel, top_n, descending_order = ascending)
+  
+  variavel <- tradutor(variavel, traducao)
     
-    else if (variavel == "Star") {
-      top_values <- calculate_top_values(df, 'Star', 10)
-      variavel = "Estrelas"
-    }
+  p <- ggplot(top_values, aes(x = Variavel, y = if (ascending) reorder(Class, Variavel) else reorder(Class, -Variavel))) +
+    geom_bar(stat = "identity", fill = "#2596be") +
+    labs(title = paste(min(top_n, length(top_values$Class)), variavel, "de", ifelse(ascending, "Maior", "Menor"), "Filmes"), x = "Quantidade", y = variavel) +  # Substitua Class pelo nome da sua variável
+    theme_minimal() +
+    theme(axis.text.x = element_text(angle = 45, hjust = 1))
     
-    else if (variavel == "Certificate") {
-      # Contagem de frequência da variável
-      top_values <- as.data.frame(table(data[[variavel]]))
-      top_values <- top_values[order(-top_values$Freq), ]
-      top_values <- top_values[1:10, ]
-      variavel = "Classificações"
-    }
-    
-    else {
-      # Contagem de frequência da variável
-      top_values <- as.data.frame(table(data[[variavel]]))
-      top_values <- top_values[order(-top_values$Freq), ]
-      top_values <- top_values[1:10, ]
-      variavel = "Diretores"
-    }
-    
-    p <- ggplot(top_values, aes(x = Freq, y = reorder(Class, Freq))) +
-      geom_bar(stat = "identity", fill = "#2596be") +
-      labs(title = paste("Top 10", variavel, "com Mais Filmes"), x = "Quantidade", y = variavel) +  # Substitua Class pelo nome da sua variável
-      theme_minimal() +
-      theme(axis.text.x = element_text(angle = 45, hjust = 1))
-    interativo <- ggplotly(p)
-    return(interativo)
-  }
+  interativo <- ggplotly(p)
+  return(interativo)
+
 }
 
 #-----------------------------------------------------------------------------------------------
@@ -111,14 +89,12 @@ countplot <- function(data, variavel, medida) {
 render_countplot <- function(input) {
   classe <- input$variavel_y
   top_n <- input$top_n
-  variavel_x <- input$variavel_x
-  medida_resumo_1 <- input$medida_resumo_1
   ascending <- input$ascending
   
   data <- carregar_dados("")
   
   # Utiliza a função pair_plot para gerar o pair plot
-  p <- countplot(data, variavel, medida)
+  p <- countplot(data, classe, top_n, ascending)
   
   return(p)
 }

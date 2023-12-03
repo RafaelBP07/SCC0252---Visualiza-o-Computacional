@@ -243,10 +243,8 @@ ui <- dashboardPage(
                            width = NULL, status = "info", solidHeader = TRUE,
                            radioGroupButtons(
                              inputId = "ascending",
-                             label = "Label",
-                             choices = c("Top", 
-                                         "Tail"),
-                             checkIcon = list(
+                             choices = c("Maiores" = TRUE, 
+                                         "Menores" = FALSE),                             checkIcon = list(
                                yes = icon("ok",
                                           lib = "glyphicon")),
                              justified = TRUE
@@ -263,15 +261,23 @@ ui <- dashboardPage(
                        box(
                          title = span(icon("chart-bar"), " Análise em função de variáveis categóricas"),
                          width = NULL, status = "info", solidHeader = TRUE,
-                         plotlyOutput("countplot", height = 600),
+                         fluidRow(
+                           column(width = 6,
+                                  plotlyOutput("countplot", height = 600)
+                           ),
+                           column(width = 6,
+                                  plotlyOutput("barplot", height = 600)
+                           )
+                         ),
                          collapsible = TRUE, collapsed = FALSE,
                          absolutePanel(
                            dropdown(
                              uiOutput("info_text_countplot"),
                              style = "unite", icon = icon("circle-info"),
                              status = "primary", width = "300px",
-                             tooltip = tooltipOptions(title = "Clique para ver mais informações sobre esse gráfico!")),
-                           top = "8%", left = "1%", width = 300, zIndex = 1000 # left = 1% ou 95%
+                             tooltip = tooltipOptions(title = "Clique para ver mais informações sobre esse gráfico!")
+                           ),
+                           top = "8%", left = "1%", width = 300, zIndex = 1000
                          )
                        )
                 )
