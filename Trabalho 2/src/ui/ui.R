@@ -13,15 +13,6 @@ df <- unite(df, Star, Star1, Star2, Star3, Star4, sep = ", ", remove = FALSE)
 
 df <- df[, !(names(df) %in% c("Star1", "Star2", "Star3", "Star4"))]
 
-  
-# # Opção agrupando colunas com texto
-# # Soma por ano
-# df_sum <- aggregate(. ~ Released_Year, data = df, FUN = function(x) if(is.numeric(x)) sum(x, na.rm = TRUE) else x)
-# 
-# # Média por ano
-# df_mean <- aggregate(. ~ Released_Year, data = df, FUN = function(x) if(is.numeric(x)) mean(x, na.rm = TRUE) else x)
-
-# Opção removendo colunas com texto
 # Encontrar colunas numéricas
 numeric_columns <- sapply(df, is.numeric)
 
@@ -54,13 +45,12 @@ Vars_comp <- names(df)
 Vars_comp <- sort(setdiff(Vars_comp, c(Vars_temp, "Released_Year", "Series_Title")))
 Vars_comp_nomes <- c("Classificação", "Diretor", "Gênero", "Estrela")
 Vars_comp_medidas <- c("Quantidade de Filmes", "Faturamento", "Faturamento Médio")
-top_ns <- seq(5, 30, by=5)
 
 #------------------------------------------------------------------------------------------------------------------------
 
 # Definir o UI
 ui <- dashboardPage(
-  dashboardHeader(title = span(icon("film"), "Top 1000 Filmes")),
+  dashboardHeader(title = span(icon("film"), "Top Filmes IMDb")),
   dashboardSidebar(
     sidebarMenu(
       menuItem("Visão Geral", tabName = "pag1", icon = icon("chart-line")),
@@ -226,7 +216,7 @@ ui <- dashboardPage(
                        box(title = span(icon("magnifying-glass"), " Selecione a classe de sua preferência"),
                            width = NULL, status = "info", solidHeader = TRUE,
                            selectInput("variavel_y", "Classe", setNames(Vars_comp, Vars_comp_nomes), selected = "Certificate", selectize = TRUE),
-                           selectInput("top_n", "Classe", top_ns, selected = "10", selectize = TRUE),
+                           numericInput("top_n", "Quantidade", value = 10, min = 5, max = 30, step = 5),
                            collapsible = TRUE
                        )
                 ),
@@ -263,10 +253,10 @@ ui <- dashboardPage(
                          width = NULL, status = "info", solidHeader = TRUE,
                          fluidRow(
                            column(width = 6,
-                                  plotlyOutput("countplot", height = 600)
+                                  plotlyOutput("countplot", height = 800)
                            ),
                            column(width = 6,
-                                  plotlyOutput("barplot", height = 600)
+                                  plotlyOutput("barplot", height = 800)
                            )
                          ),
                          collapsible = TRUE, collapsed = FALSE,
@@ -277,7 +267,7 @@ ui <- dashboardPage(
                              status = "primary", width = "300px",
                              tooltip = tooltipOptions(title = "Clique para ver mais informações sobre esse gráfico!")
                            ),
-                           top = "8%", left = "1%", width = 300, zIndex = 1000
+                           top = "6%", left = "1%", width = 300, zIndex = 1000
                          )
                        )
                 )
