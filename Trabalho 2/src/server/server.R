@@ -50,30 +50,26 @@ server <- function(input, output, session) {
   output$info_text_pairplot1 <- renderUI({
     tagList(
       tags$h4(tags$b("Contexto e Justificativa")),
-      tags$p("X"),
+      tags$p("Ao imergir na vasta base de dados do IMDB, repleta de informações sobre filmes, buscamos compreender não apenas características individuais, mas também explorar as complexas relações entre diferentes variáveis. Nosso objetivo é obter insights abrangentes sobre como fatores específicos interagem e influenciam o desempenho e a recepção de filmes. Optamos por utilizar o gráfico Pairplot em conjunto com Boxplots, uma escolha que nos permitirá examinar simultaneamente seis variáveis específicas - orçamento, bilheteria e classificação - selecionadas com base na sua relevância para a indústria cinematográfica. Essa abordagem oferece uma visão detalhada das interações entre essas variáveis, destacando padrões visuais, identificando outliers e proporcionando uma compreensão mais profunda das relações complexas que moldam o sucesso de um filme."),
       tags$h4(tags$b("Interpretação do Gráfico")),
-      tags$p("X"),
+      tags$p("No âmbito desse gráfico, destacam-se correlações significativas entre o faturamento e tanto o número de votos quanto a avaliação no IMDB. No que diz respeito às distribuições, com exceção do ano, observamos uma tendência de dispersões pronunciadas e presença marcante de outliers em todas as variáveis. Esses padrões visuais apontam para relações substanciais entre o desempenho financeiro dos filmes, a participação do público e as avaliações, embora as distribuições mostrem uma notável variabilidade, indicando a diversidade de casos e possíveis influências externas ao longo do tempo."),
       tags$h4(tags$b("Insights e Observações")),
-      tags$p("X"),
-      tags$h4(tags$b("Exemplos e Aplicações Práticas")),
-      tags$p("X"),
+      tags$p("Ao examinar o gráfico que ilustra correlações entre faturamento, número de votos e avaliação do IMDB, destacam-se insights significativos. A correlação positiva entre faturamento e número de votos sugere que filmes populares tendem a acumular mais avaliações. Além disso, a relação positiva entre faturamento e rating do IMDB indica que filmes financeiramente bem-sucedidos frequentemente recebem melhores avaliações. Contudo, a presença de dispersões pronunciadas e outliers em todas as variáveis aponta para uma notável variabilidade na indústria cinematográfica, destacando a complexidade do cenário. A influência do ano como variável discrepante sugere uma evolução ao longo do tempo, apontando para a necessidade de análises mais profundas para compreender os fatores impulsionadores do sucesso cinematográfico."),
       tags$h4(tags$b("Limitações e Considerações Adicionais")),
-      tags$p("X")
+      tags$p("No entanto, é crucial reconhecer as limitações e considerações adicionais ao interpretar os resultados desses gráficos. A correlação identificada não implica causalidade, e fatores externos não representados na análise podem influenciar os resultados. Além disso, a presença de outliers pode distorcer as tendências gerais, exigindo uma abordagem mais detalhada na identificação e compreensão desses casos excepcionais. A variabilidade temporal pode ser mais complexa do que sugere a análise, considerando a evolução das tendências ao longo dos anos. Portanto, ao utilizar essas ferramentas, é fundamental adotar uma abordagem cautelosa, incorporando uma compreensão mais holística das variáveis e contextos específicos da indústria cinematográfica.")
     )
   })
   
   output$info_text_lineplot1 <- renderUI({
     tagList(
       tags$h4(tags$b("Contexto e Justificativa")),
-      tags$p("XXX"),
+      tags$p("Ao empregar gráficos de linha e heatmap em função do tempo na análise de dados do IMDB, buscamos desvendar padrões temporais que possam influenciar o desempenho dos filmes. A escolha dessas visualizações se justifica pela capacidade de capturar tendências ao longo do tempo e identificar correlações entre variáveis-chave, como faturamento, avaliações e participação do público."),
       tags$h4(tags$b("Interpretação do Gráfico")),
-      tags$p("XXX"),
+      tags$p("O gráfico de linha temporal revela um padrão consistente de aumento em todas as variáveis ao longo do tempo, indicando um crescimento geral em fatores como faturamento, avaliações e participação do público. Contudo, destaca-se uma queda considerável em 2020, o que pode ser diretamente atribuído à pandemia de Covid-19. Essa anomalia temporal sugere uma interrupção significativa nos padrões habituais da indústria cinematográfica durante esse período, evidenciando o impacto direto da pandemia nos resultados."),
       tags$h4(tags$b("Insights e Observações")),
-      tags$p("XXX"),
-      tags$h4(tags$b("Exemplos e Aplicações Práticas")),
-      tags$p("XXX"),
+      tags$p("Ao examinar essa queda em 2020, podemos inferir insights importantes sobre as ramificações da pandemia na indústria cinematográfica. A diminuição acentuada em todas as variáveis sugere não apenas uma redução nas receitas, mas também uma possível mudança no comportamento do público e nas estratégias de lançamento de filmes. Essa observação ressalta a necessidade de considerar eventos externos ao interpretar padrões temporais, oferecendo uma perspectiva valiosa para ajustes estratégicos e adaptações futuras na indústria do entretenimento."),
       tags$h4(tags$b("Limitações e Considerações Adicionais")),
-      tags$p("XXX")
+      tags$p("Entretanto, é importante reconhecer as limitações. Eventos externos não refletidos nos dados podem influenciar drasticamente os resultados. Além disso, a interpretação de correlações não implica causalidade, exigindo uma análise cuidadosa. A granularidade temporal escolhida pode impactar as conclusões, sendo essencial considerar intervalos que capturem eventos relevantes. Portanto, ao explorar esses gráficos, é crucial adotar uma abordagem balanceada, considerando a complexidade do contexto temporal na indústria cinematográfica.")
     )
   })
   
