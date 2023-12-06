@@ -76,15 +76,13 @@ server <- function(input, output, session) {
   output$info_text_heatmap1 <- renderUI({
     tagList(
       tags$h4(tags$b("Contexto e Justificativa")),
-      tags$p("XXX"),
+      tags$p("A aplicação de um heatmap ao longo dos anos, com a contagem de gêneros de filmes, visa proporcionar uma análise abrangente das tendências de produção cinematográfica ao longo do tempo. A escolha dessa visualização é motivada pela busca por padrões nas preferências do público em relação aos gêneros cinematográficos. O heatmap, ao mapear visualmente a distribuição das contagens de gêneros ao longo dos anos, oferece insights cruciais sobre a evolução dos gostos do público e orienta decisões estratégicas na indústria cinematográfica."),
       tags$h4(tags$b("Interpretação do Gráfico")),
-      tags$p("XXX"),
+      tags$p("A análise mais aprofundada do heatmap revela que o gênero de filme que se destaca predominantemente é o drama, com uma frequência que aumenta consistentemente ao longo dos anos. Este padrão sugere uma preferência duradoura do público por filmes desse gênero específico. A concentração contínua de contagens de dramas destaca a relevância persistente desse tipo de produção ao longo do tempo na indústria cinematográfica."),
       tags$h4(tags$b("Insights e Observações")),
-      tags$p("XXX"),
-      tags$h4(tags$b("Exemplos e Aplicações Práticas")),
-      tags$p("XXX"),
+      tags$p("Ao identificar o drama como o gênero de destaque, podemos extrair insights valiosos sobre as preferências de longo prazo do público. O aumento contínuo na frequência de dramas pode orientar estratégias de produção, marketing e distribuição, indicando uma demanda constante por esse tipo de conteúdo. Além disso, ao observar que os tipos de filmes mais frequentemente feitos são voltados para todos os públicos e adultos em geral, podemos inferir tendências mais amplas da indústria cinematográfica, alinhando a produção com as expectativas do mercado."),
       tags$h4(tags$b("Limitações e Considerações Adicionais")),
-      tags$p("XXX")
+      tags$p("Entretanto, é fundamental reconhecer que a contagem de gêneros por si só não reflete a qualidade ou aceitação crítica dos filmes. Além disso, eventos externos e mudanças culturais podem influenciar significativamente as preferências de gênero, exigindo uma análise contextual. A escolha da granularidade temporal é vital, pois certos eventos podem impactar a popularidade de determinados gêneros em curtos períodos. Dessa forma, ao interpretar o heatmap, é essencial adotar uma abordagem equilibrada, considerando a complexidade das preferências do público em relação aos gêneros cinematográficos ao longo do tempo.")
     )
   })
   
@@ -95,8 +93,6 @@ server <- function(input, output, session) {
       tags$h4(tags$b("Interpretação do Gráfico")),
       tags$p("XXX"),
       tags$h4(tags$b("Insights e Observações")),
-      tags$p("XXX"),
-      tags$h4(tags$b("Exemplos e Aplicações Práticas")),
       tags$p("XXX"),
       tags$h4(tags$b("Limitações e Considerações Adicionais")),
       tags$p("XXX")
