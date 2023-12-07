@@ -1,19 +1,6 @@
-traducao <- c("Genre" = "Gêneros",
-              "Star" = "Estrelas",
-              "Certificate" = "Classificações",
-              "Director" = "Diretores",
-              "Gross" = "Faturamento",
-              "IMDB_Rating" = "Avaliação IMDB",
-              "Meta_score" = "Pontuação Meta",
-              "No_of_Votes" = "Número de Votos",
-              "Runtime" = "Duração")
+# Função geral para o gráfico de barras
 
-# Função para substituir valores com base no mapeamento
-tradutor <- function(variavel, traducao) {
-  variavel_pt <- traducao[variavel]
-
-  return(variavel_pt)
-}
+#-----------------------------------------------------------------------------------------------
 
 # Função para criar um barplot
 barplot <- function(data, variavel, top_n, variavel_x, medida_resumo, ascending) {
@@ -26,7 +13,7 @@ barplot <- function(data, variavel, top_n, variavel_x, medida_resumo, ascending)
   
   p <- ggplot(top_values, aes(x = Variavel, y = if (ascending) reorder(Class, Variavel) else reorder(Class, -Variavel))) +
     geom_bar(stat = "identity", fill = "#2596be") +
-    labs(title = paste(min(top_n, length(top_values$Class)), variavel, "de", ifelse(ascending, "Maior", "Menor"), variavel_x, ifelse(medida_resumo == "sum", "(Total)", "(Média)")), x = variavel_x, y = variavel) +  # Substitua Class pelo nome da sua variável
+    labs(title = paste("Top", min(top_n, length(top_values$Class)), variavel, "de", ifelse(ascending, "Maior", "Menor"), variavel_x, ifelse(medida_resumo == "sum", "(Total)", "(Média)")), x = variavel_x, y = variavel) +  # Substitua Class pelo nome da sua variável
     theme_minimal() +
     theme(axis.text.x = element_text(angle = 45, hjust = 1))
   

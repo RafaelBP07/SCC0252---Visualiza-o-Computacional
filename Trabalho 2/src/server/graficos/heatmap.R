@@ -30,6 +30,9 @@ heatmap_plot <- function(data, measure = "count", variable = NULL, Certificado =
     
     df_certificate$Certificate <- factor(df_certificate$Certificate, levels = rev(certificate_order))  # Inverter a ordem dos níveis
     
+    # Traduzir titulo
+    variable <- tradutor(as.character(variable), traducao)
+    
     # Criar o gráfico de mapa de calor
     certificate_heatmap_plot <- ggplot(df_certificate, aes(x = Released_Year, y = Certificate, fill = count)) +
       geom_tile() +
@@ -84,6 +87,9 @@ heatmap_plot <- function(data, measure = "count", variable = NULL, Certificado =
   
   df_genre$Genre <- factor(df_genre$Genre, levels = rev(genre_order))  # Inverter a ordem dos níveis
   
+  # Traduzir titulo
+  variable <- tradutor(as.character(variable), traducao)
+  
   # Criar o gráfico de mapa de calor
   heatmap_plot <- ggplot(df_genre, aes(x = Released_Year, y = Genre, fill = count)) +
     geom_tile() +
@@ -135,16 +141,6 @@ render_heatmap <- function(input, gerar_padrao = FALSE) {
   # Carrega os dados
   data <- carregar_dados("", periodo)
   
-  # # Gera o heatmap padrão se 'gerar_padrao' estiver definido como TRUE
-  # if (gerar_padrao && certificado == "Classificação") {
-  #   p <- heatmap_plot(data, Certificado = TRUE)
-  #   # Gera o heatmap com a classificação se 'certificado' estiver definido como "Classificação"
-  # } else if (gerar_padrao) {
-  #   p <- heatmap_plot(data)
-  # } else {
-  #   # Utiliza a função heatmap_plot para gerar o gráfico com os parâmetros fornecidos
-  #   p <- heatmap_plot(data, medida, variavel)
-  # }
   # Gera o heatmap padrão se 'gerar_padrao' estiver definido como TRUE
   if (gerar_padrao) {
     p <- heatmap_plot(data, Certificado = certificado)

@@ -100,7 +100,7 @@ ui <- dashboardPage(
                            dropdown(
                              uiOutput("info_text_pairplot1"),
                              style = "unite", icon = icon("circle-info"),
-                             status = "primary", width = "300px",
+                             status = "primary", width = "900px",
                              tooltip = tooltipOptions(title = "Clique para ver mais informações sobre esse gráfico!")),
                            top = "4%", left = "1%", width = 300, zIndex = 1000 # left = 1% ou 95%
                          )
@@ -156,7 +156,7 @@ ui <- dashboardPage(
                            dropdown(
                              uiOutput("info_text_lineplot1"),
                              style = "unite", icon = icon("circle-info"),
-                             status = "primary", width = "300px",
+                             status = "primary", width = "900px",
                              tooltip = tooltipOptions(title = "Clique para ver mais informações sobre esse gráfico!")),
                            top = "4%", left = "1%", width = 300, zIndex = 1000 # left = 1% ou 95%
                          )
@@ -197,7 +197,7 @@ ui <- dashboardPage(
                            dropdown(
                              uiOutput("info_text_heatmap1"),
                              style = "unite", icon = icon("circle-info"),
-                             status = "primary", width = "300px",
+                             status = "primary", width = "900px",
                              tooltip = tooltipOptions(title = "Clique para ver mais informações sobre esse gráfico!")),
                            top = "8%", left = "1%", width = 300, zIndex = 1000 # left = 1% ou 95%
                          )
@@ -264,7 +264,7 @@ ui <- dashboardPage(
                            dropdown(
                              uiOutput("info_text_countplot"),
                              style = "unite", icon = icon("circle-info"),
-                             status = "primary", width = "300px",
+                             status = "primary", width = "900px",
                              tooltip = tooltipOptions(title = "Clique para ver mais informações sobre esse gráfico!")
                            ),
                            top = "6%", left = "1%", width = 300, zIndex = 1000
