@@ -3,6 +3,10 @@ pacman::p_load(shiny,
                shinydashboard, 
                shinyWidgets, 
                plotly)
+#------------------------------------------------------------
+
+# Ocultar warnings
+options(warn=-1)
 
 #------------------------------------------------------------------------------------------------------------------------
 
@@ -91,7 +95,7 @@ ui <- dashboardPage(
               fluidRow(
                 column(width = 12,
                        box(
-                         title = span(icon("chart-column"), "Análise de correlação e distribuição"),
+                         title = span(icon("chart-column"), "Análise de correlação, distribuição e dispersão"),
                          width = NULL, status = "info", solidHeader = TRUE,
                          plotlyOutput("pairplot", height = 800),
                          plotlyOutput("boxplot", height = 400),

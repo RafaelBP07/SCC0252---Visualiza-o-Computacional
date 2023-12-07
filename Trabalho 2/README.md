@@ -1,4 +1,4 @@
-# **Análise Interativa dos Top 1000 Filmes no IMDb** 🎬✨
+# **Cinema em Números: Uma Abordagem Interativa dos Melhores Filmes IMDb** 🎬✨
 
 
 ## Descrição
@@ -41,9 +41,10 @@ Explore e compreenda a classificação dos top 1000 filmes no IMDb através de u
 5. Explore as funcionalidades interativas do aplicativo para visualizar e analisar os dados.
 
 ## **Acesse a Plataforma**
-[Acesse o Deploy da Aplicação!]() **Deploy Temporariamente Indisponível**
+[Acesse o Deploy da Aplicação!](https://rafaelbp07.shinyapps.io/trabalho_2/)
 
-### Algumas Capturas de Tela:
+### Sneak Peek:
 
-<img src="https://github.com/RafaelBP07/SCC0252-Visualizacao-Computacional/assets/88207679/f7c55a0e-c4d9-4f94-91f5-2af9eda48403" width="400" height="300" /> 
-<img src="https://github.com/RafaelBP07/SCC0252-Visualizacao-Computacional/assets/88207679/84c275f4-df9f-4914-a621-dd4d6aae5b96" width="400" height="300" />
+<img src="https://github.com/RafaelBP07/SCC0252-Visualizacao-Computacional/assets/88207679/f7c55a0e-c4d9-4f94-91f5-2af9eda48403" width="300" height="300" /> 
+<img src="https://github.com/RafaelBP07/SCC0252-Visualizacao-Computacional/assets/88207679/94962cb6-cffc-4d31-bfc5-eea740be05ef" width="300" height="300" />
+<img src="https://github.com/RafaelBP07/SCC0252-Visualizacao-Computacional/assets/88207679/d9cc1bbc-be05-4fcb-88fa-6990e08dbbbd" width="300" height="300" />

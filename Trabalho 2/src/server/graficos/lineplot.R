@@ -5,7 +5,7 @@
 # Função que gera o gráfico de linhas
 line_plot <- function(data, x_var, y_var, titulo_grafico, eixo_x, eixo_y) {
   p <- ggplot(data, aes(x = !!x_var, y = !!y_var, group = 1)) +
-    geom_smooth(method = "lm", se = FALSE, color = "#ef2f00", linetype = "dashed") +
+    geom_smooth(formula = y ~ x, method = "lm", se = FALSE, color = "#ef2f00", linetype = "dashed") +
     geom_line(color = "#2596be") +
     geom_point(color = "#2596be") +
     labs(title = titulo_grafico, x = eixo_x, y = eixo_y) +

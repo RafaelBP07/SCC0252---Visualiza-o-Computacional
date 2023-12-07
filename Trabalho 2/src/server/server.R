@@ -13,7 +13,7 @@ source("./src/server/graficos/index.R")
 # Definir o servidor
 server <- function(input, output, session) {
   
-  print('recarregando')
+  print('INICIANDO')
   #================================================================== GRÁFICOS
     
   output$pairplot <- renderPlotly({
@@ -101,6 +101,7 @@ server <- function(input, output, session) {
   
   #================================================================== END: TEXTOS
   
+  #================================================================== TEXTO SOBRE
   output$texto_sobre <- renderUI({
     tagList(
       tags$p(tags$b("Origem dos Dados:")),
@@ -174,8 +175,9 @@ server <- function(input, output, session) {
     )
   })
   
-  #------------------------------------------------------------
+  #================================================================== END: TEXTO SOBRE
   
+  #================================================================== CSS
   # CSS para atualizar o layout
   output$style <- renderUI({
     tags$style(HTML(
@@ -226,5 +228,6 @@ server <- function(input, output, session) {
       "
     ))
   })
+  #================================================================== END: CSS
   
 }

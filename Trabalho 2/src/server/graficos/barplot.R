@@ -13,7 +13,7 @@ barplot <- function(data, variavel, top_n, variavel_x, medida_resumo, ascending)
   
   p <- ggplot(top_values, aes(x = Variavel, y = if (ascending) reorder(Class, Variavel) else reorder(Class, -Variavel))) +
     geom_bar(stat = "identity", fill = "#2596be") +
-    labs(title = paste("Top", min(top_n, length(top_values$Class)), variavel, "de", ifelse(ascending, "Maior", "Menor"), variavel_x, ifelse(medida_resumo == "sum", "(Total)", "(Média)")), x = variavel_x, y = variavel) +  # Substitua Class pelo nome da sua variável
+    labs(title = paste("Top", min(top_n, length(top_values$Class)), variavel, "com", ifelse(ascending, "Maior", "Menor"), variavel_x, ifelse(medida_resumo == "sum", "Total", "Média")), x = variavel_x, y = variavel) +  # Substitua Class pelo nome da sua variável
     theme_minimal() +
     theme(axis.text.x = element_text(angle = 45, hjust = 1))
   

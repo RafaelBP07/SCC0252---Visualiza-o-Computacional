@@ -4,110 +4,61 @@
 
 # Função para criar um gráfico de calor
 heatmap_plot <- function(data, measure = "count", variable = NULL, Certificado = FALSE) {
-  if (Certificado == "Classificação"){
-    if (is.null(variable)) {
-      # Contar o número total de filmes por certificado e ano
-      df_certificate <- data %>%
-        group_by(Released_Year, Certificate) %>%
-        summarize(count = n())
-    } else {
-      # Usar a medida resumo (soma ou média) para a variável específica
-      df_certificate <- data %>%
-        group_by(Released_Year, Certificate) %>%
+  grouping_var <- ifelse(Certificado == "Classificação", "Certificate", "Genre")
+  
+  if (is.null(variable)) {
+    # Contar o número total de filmes por variável e ano
+    df <- suppressMessages(
+      data %>%
+        separate_rows(!!sym(grouping_var), sep = ", ") %>%
+        group_by(Released_Year, !!sym(grouping_var)) %>%
+        summarize(count = n()))
+  } else {
+    # Usar a medida resumo (soma ou média) para a variável específica
+    df <- suppressMessages(
+      data %>%
+        separate_rows(!!sym(grouping_var), sep = ", ") %>%
+        group_by(Released_Year, !!sym(grouping_var)) %>%
         summarize(count = switch(
           measure,
           "sum" = sum(!!sym(variable)),
           "mean" = mean(!!sym(variable))
-        ))
-    }
-    
-    # Ordenar os certificados pelo número total de filmes
-    certificate_order <- df_certificate %>%
-      group_by(Certificate) %>%
-      summarize(total_count = sum(count)) %>%
-      arrange(desc(total_count)) %>%
-      pull(Certificate)
-    
-    df_certificate$Certificate <- factor(df_certificate$Certificate, levels = rev(certificate_order))  # Inverter a ordem dos níveis
-    
-    # Traduzir titulo
-    variable <- tradutor(as.character(variable), traducao)
-    
-    # Criar o gráfico de mapa de calor
-    certificate_heatmap_plot <- ggplot(df_certificate, aes(x = Released_Year, y = Certificate, fill = count)) +
-      geom_tile() +
-      scale_fill_gradient(low = "white", high = "#2596be") +
-      labs(title = switch(
-        measure,
-        "count" = "Mapa de Calor da Contagem de Filmes por Classificação ao Longo dos Anos",
-        "sum" = paste("Mapa de Calor da Soma de", variable, "por Classificação ao Longo dos Anos"),
-        "mean" = paste("Mapa de Calor da Média de", variable, "por Classificação ao Longo dos Anos")
-      ),
-      x = "Ano de Lançamento",
-      y = "Classificação",
-      fill = switch(
-        measure,
-        "count" = "Contagem",
-        "sum" = "Soma",
-        "mean" = "Média"
-      )) +
-      theme_classic() +
-      theme(axis.text.x = element_text(angle = 45, hjust = 1))
-    
-    # Converter para plotly
-    certificate_heatmap_plotly <- ggplotly(certificate_heatmap_plot)
-    
-    return(certificate_heatmap_plotly)
+        )))
   }
   
-  if (is.null(variable)) {
-    # Contar o número total de filmes por gênero e ano
-    df_genre <- data %>%
-      separate_rows(Genre, sep = ", ") %>%
-      group_by(Released_Year, Genre) %>%
-      summarize(count = n())
-  } else {
-    # Usar a medida resumo (soma ou média) para a variável específica
-    df_genre <- data %>%
-      separate_rows(Genre, sep = ", ") %>%
-      group_by(Released_Year, Genre) %>%
-      summarize(count = switch(
-        measure,
-        "sum" = sum(!!sym(variable)),
-        "mean" = mean(!!sym(variable))
-      ))
-  }
-  
-  # Ordenar os gêneros pelo número total de filmes
-  genre_order <- df_genre %>%
-    group_by(Genre) %>%
+  # Ordenar as variáveis pelo número total de filmes
+  order_var <- df %>%
+    group_by(!!sym(grouping_var)) %>%
     summarize(total_count = sum(count)) %>%
     arrange(desc(total_count)) %>%
-    pull(Genre)
+    pull(!!sym(grouping_var))
   
-  df_genre$Genre <- factor(df_genre$Genre, levels = rev(genre_order))  # Inverter a ordem dos níveis
+  df[[grouping_var]] <- factor(df[[grouping_var]], levels = rev(order_var))  # Inverter a ordem dos níveis
   
-  # Traduzir titulo
+  # Traduzir título
   variable <- tradutor(as.character(variable), traducao)
+  class <- tradutor(as.character(grouping_var), traducao)
   
   # Criar o gráfico de mapa de calor
-  heatmap_plot <- ggplot(df_genre, aes(x = Released_Year, y = Genre, fill = count)) +
+  plot_title <- switch(
+    measure,
+    "count" = paste("Mapa de Calor da Contagem de Filmes por", class, "ao Longo dos Anos"),
+    "sum" = paste("Mapa de Calor da Soma de", variable, "por", class, "ao Longo dos Anos"),
+    "mean" = paste("Mapa de Calor da Média de", variable, "por", class, "ao Longo dos Anos")
+  )
+  
+  heatmap_plot <- ggplot(df, aes(x = Released_Year, y = !!sym(grouping_var), fill = count)) +
     geom_tile() +
     scale_fill_gradient(low = "white", high = "#2596be") +
-    labs(title = switch(
-      measure,
-      "count" = "Mapa de Calor da Contagem de Filmes por Gênero ao Longo dos Anos",
-      "sum" = paste("Mapa de Calor da Soma de", variable, "por Gênero ao Longo dos Anos"),
-      "mean" = paste("Mapa de Calor da Média de", variable, "por Gênero ao Longo dos Anos")
-    ),
-    x = "Ano de Lançamento",
-    y = "Gênero",
-    fill = switch(
-      measure,
-      "count" = "Contagem",
-      "sum" = "Soma",
-      "mean" = "Média"
-    )) +
+    labs(title = plot_title,
+         x = "Ano de Lançamento",
+         y = grouping_var,
+         fill = switch(
+           measure,
+           "count" = "Contagem",
+           "sum" = "Soma",
+           "mean" = "Média"
+         )) +
     theme_classic() +
     theme(axis.text.x = element_text(angle = 45, hjust = 1))
   
@@ -116,6 +67,7 @@ heatmap_plot <- function(data, measure = "count", variable = NULL, Certificado =
   
   return(heatmap_plotly)
 }
+
 
 # # Exemplo de uso da função
 # # Contagem total de filmes por gênero e ano

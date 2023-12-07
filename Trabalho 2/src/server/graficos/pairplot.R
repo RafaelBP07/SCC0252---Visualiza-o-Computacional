@@ -3,10 +3,10 @@
 #-----------------------------------------------------------------------------------------------
 
 # Função lowerFn
-lowerFn <- function(data, mapping, method = "lm", ...) {
+lowerFn <- function(data, mapping, method = "lm") {
   ggplot(data = data, mapping = mapping) +
     geom_point(colour = "#2596be") +
-    geom_smooth(method = method, fill = "#2596be", color = "red", ...)
+    geom_smooth(formula = y ~ x, method = method, fill = "#2596be", color = "red")
 }
 
 # Função que gera o pair plot
@@ -16,8 +16,8 @@ pairplot <- function(data) {
 
   p <- ggpairs(data,
                lower = list(continuous = wrap(lowerFn, method = "lm")),
-               diag = list(continuous = wrap("barDiag", fill = "#2596be", colour = "#2596be")),
-               upper = list(continuous = wrap("cor", size = size_param, label_params = list(show.signif = FALSE)))) +
+               diag = list(continuous = wrap("barDiag", fill = "#2596be", colour = "#2596be", bins = 30)),
+               upper = list(continuous = wrap("cor", size = size_param))) +
     theme_minimal()
 
   fig <- ggplotly(p)
