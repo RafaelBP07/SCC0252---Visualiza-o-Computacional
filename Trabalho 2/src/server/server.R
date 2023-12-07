@@ -89,13 +89,13 @@ server <- function(input, output, session) {
   output$info_text_countplot <- renderUI({
     tagList(
       tags$h4(tags$b("Contexto e Justificativa")),
-      tags$p("XXX"),
+      tags$p("A escolha de utilizar gráficos de barra comparativos, analisando uma variável em função de outra, visa oferecer uma visão clara das relações entre dois fatores cruciais na indústria cinematográfica. Neste contexto, selecionaremos as variáveis diretor, ator, gênero e classificação, avaliando cada uma delas em relação a cinco métricas: Faturamento, Nota, Votos, Duração e Pontuação meta. A escolha dessa abordagem se justifica pela necessidade de compreender como diferentes elementos impactam variáveis-chave na produção cinematográfica."),
       tags$h4(tags$b("Interpretação do Gráfico")),
-      tags$p("XXX"),
+      tags$p("Ao observar os gráficos de barra comparativos, é possível identificar relações claras entre diretores, atores, gêneros ou classificações e as métricas selecionadas. Por exemplo, ao avaliar o faturamento em função dos diretores, podemos identificar quais cineastas estão associados a maiores receitas. O mesmo princípio se aplica ao examinar a nota, votos, duração ou pontuação meta em relação às variáveis escolhidas. A diferenciação entre x menores ou maiores permite destacar especificamente os elementos mais influentes em cada contexto."),
       tags$h4(tags$b("Insights e Observações")),
-      tags$p("XXX"),
+      tags$p("A análise desses gráficos proporciona insights valiosos sobre como diferentes elementos contribuem para o desempenho de filmes em várias métricas. Por exemplo, identificar os diretores, atores, gêneros ou classificações associados aos maiores faturamentos pode guiar estratégias de elenco e produção. Ao avaliar as relações entre esses elementos e a nota, votos, duração ou pontuação meta, podemos adaptar estratégias de marketing, entender preferências de público e otimizar o desenvolvimento cinematográfico."),
       tags$h4(tags$b("Limitações e Considerações Adicionais")),
-      tags$p("XXX")
+      tags$p("Contudo, é fundamental reconhecer que a correlação não implica causalidade, e outros fatores não representados nos gráficos podem influenciar os resultados. Além disso, a escolha de x menores ou maiores pode afetar significativamente as conclusões, exigindo uma consideração cuidadosa do contexto. A análise de atores, diretores, gêneros ou classificações em relação às métricas selecionadas proporciona uma visão específica, mas deve ser complementada por análises mais amplas para uma compreensão holística do sucesso cinematográfico.")
     )
   })
   
