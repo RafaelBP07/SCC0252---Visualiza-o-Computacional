@@ -162,7 +162,7 @@ ui <- dashboardPage(
                              style = "unite", icon = icon("circle-info"),
                              status = "primary", width = "900px",
                              tooltip = tooltipOptions(title = "Clique para ver mais informações sobre esse gráfico!")),
-                           top = "4%", left = "1%", width = 300, zIndex = 1000 # left = 1% ou 95%
+                           top = "4%", left = "0.5%", width = 300, zIndex = 1000 # left = 1% ou 95%
                          )
                        )
                 )
