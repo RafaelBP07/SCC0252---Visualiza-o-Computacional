@@ -12,3 +12,6 @@ Repositório destinado aos trabalhos desenvolvidos na disciplina de Visualizaç�
 
 - **Rafael Batista Pereira**
   - Número de Matrícula: 12610462
+
+ ## **Acesse a Plataforma**
+[Acesse o Deploy da Aplicação!](https://rafaelbp07.shinyapps.io/trabalho_2/)
